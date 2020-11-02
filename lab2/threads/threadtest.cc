@@ -49,6 +49,33 @@ void ThreadTest1() {
   SimpleThread(0);
 }
 
+// begin ljl
+//----------------------------------------------------------------------
+// ThreadPriorityTest()
+//----------------------------------------------------------------------
+void newSimpleThread(int which) {
+  int num;
+
+  for (num = 0; num < 5; num++) {
+    printf("*** thread %d looped %d times\n", which, num);
+  }
+}
+
+void ThreadPriorityTest() {
+  DEBUG('t', "Entering ThreadPriorityTest");
+
+  Thread *t1 = new Thread("forked thread 1", 1);
+  Thread *t2 = new Thread("forked thread 2", 2);
+  Thread *t3 = new Thread("forked thread 3", 3);
+  Thread *t4 = new Thread("forked thread 4", 4);
+
+  t4->Fork(newSimpleThread, (void *)4);
+  t3->Fork(newSimpleThread, (void *)3);
+  t2->Fork(newSimpleThread, (void *)2);
+  t1->Fork(newSimpleThread, (void *)1);
+}
+// end ljl
+
 //----------------------------------------------------------------------
 // ThreadTest
 // 	Invoke a test routine.
@@ -58,6 +85,9 @@ void ThreadTest() {
   switch (testnum) {
   case 1:
     ThreadTest1();
+    break;
+  case 2:
+    ThreadPriorityTest();
     break;
   default:
     printf("No test specified.\n");

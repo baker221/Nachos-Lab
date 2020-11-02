@@ -79,7 +79,7 @@ private:
   void *machineState[MachineStateSize]; // all registers except for stackTop
 
 public:
-  Thread(char *debugName); // initialize a Thread
+  Thread(char *debugName, int p = 0); // initialize a Thread
   ~Thread();               // deallocate a Thread
                            // NOTE -- thread being deleted
                            // must not be running when delete
@@ -99,6 +99,8 @@ public:
   void setStatus(ThreadStatus st) { status = st; }
   char *getName() { return (name); }
   void Print() { printf("%s, ", name); }
+  void setPriority(int x) { priority = x; }
+  int getPriority() { return priority; }
 
 private:
   // some of the private data for this class is listed above
@@ -112,6 +114,7 @@ private:
   void StackAllocate(VoidFunctionPtr func, void *arg);
   // Allocate a stack for thread.
   // Used internally by Fork()
+  int priority;
 
 #ifdef USER_PROGRAM
   // A thread running a user program actually has *two* sets of CPU registers --

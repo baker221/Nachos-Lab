@@ -48,7 +48,13 @@ void Scheduler::ReadyToRun(Thread *thread) {
   DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
 
   thread->setStatus(READY);
-  readyList->Append((void *)thread);
+  // readyList->Append((void *)thread);
+  // ljl begin
+  readyList->SortedInsert((void *)thread, thread->getPriority());
+  if (currentThread->getPriority() > thread->getPriority()) {
+    currentThread->Yield();
+  }
+  // ljl end
 }
 
 //----------------------------------------------------------------------
@@ -59,7 +65,10 @@ void Scheduler::ReadyToRun(Thread *thread) {
 //	Thread is removed from the ready list.
 //----------------------------------------------------------------------
 
-Thread *Scheduler::FindNextToRun() { return (Thread *)readyList->Remove(); }
+Thread *Scheduler::FindNextToRun() {
+  return (Thread *)readyList->SortedRemove(NULL);
+  // return (Thread *)readyList->Remove();
+  }
 
 //----------------------------------------------------------------------
 // Scheduler::Run
