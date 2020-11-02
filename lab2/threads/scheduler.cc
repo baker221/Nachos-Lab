@@ -29,7 +29,6 @@
 
 Scheduler::Scheduler() {
   readyList = new List;
-  LastSwitchTick = 0;
 }
 
 //----------------------------------------------------------------------
@@ -140,4 +139,15 @@ void Scheduler::Run(Thread *nextThread) {
 void Scheduler::Print() {
   printf("Ready list contents:\n");
   readyList->Mapcar((VoidFunctionPtr)ThreadPrint);
+}
+
+// 返回readyList中的首个进程并不将它从List中删除
+Thread *Scheduler::GetFirst() {
+  ListElement *first = readyList->GetFirst();
+  if (first == NULL) {
+    return NULL;
+  }
+  else {
+    return (Thread *)first->item;
+  }
 }

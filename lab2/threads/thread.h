@@ -80,10 +80,10 @@ private:
 
 public:
   Thread(char *debugName, int p = 0); // initialize a Thread
-  ~Thread();               // deallocate a Thread
-                           // NOTE -- thread being deleted
-                           // must not be running when delete
-                           // is called
+  ~Thread();                          // deallocate a Thread
+                                      // NOTE -- thread being deleted
+                                      // must not be running when delete
+                                      // is called
 
   // basic thread operations
 
@@ -101,6 +101,10 @@ public:
   void Print() { printf("%s, ", name); }
   void setPriority(int x) { priority = x; }
   int getPriority() { return priority; }
+  void setTimeSliceNum(int x) { timeSliceNum = x; }
+  void increaseTimeSliceNum() { timeSliceNum += 1; }
+  int getTimeSliceNum() { return timeSliceNum; }
+  int getDynamicPrior() { return (1 + priority) * (1 + timeSliceNum); }
 
 private:
   // some of the private data for this class is listed above
@@ -115,6 +119,7 @@ private:
   // Allocate a stack for thread.
   // Used internally by Fork()
   int priority;
+  int timeSliceNum;
 
 #ifdef USER_PROGRAM
   // A thread running a user program actually has *two* sets of CPU registers --

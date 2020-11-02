@@ -39,6 +39,7 @@ Thread::Thread(char *threadName, int p = 0) {
   stack = NULL;
   status = JUST_CREATED;
   priority = p;
+  timeSliceNum = 0;
 #ifdef USER_PROGRAM
   space = NULL;
 #endif

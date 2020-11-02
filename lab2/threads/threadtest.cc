@@ -82,9 +82,11 @@ void ThreadPriorityTest() {
 //----------------------------------------------------------------------
 void SimpleThread_ticks(int which) {
   int num;
-  for (num = 0; num < 20; num++) {
-    printf("*** thread %d looped %d times, now totalTicks: %d\n", which, num,
-           stats->totalTicks);
+  for (num = 0; num < 80; num++) {
+    printf("*** thread %d with priority %d looped %d times, its dynamic "
+           "priority is %d. now totalTicks: %d\n",
+           which, currentThread->getPriority(), num,
+           currentThread->getDynamicPrior(), stats->totalTicks);
     interrupt->OneTick();
   }
 }
@@ -92,22 +94,15 @@ void ThreadRRTest() {
   DEBUG('t', "Entering ThreadRRTest");
 
   printf("before true rrtest, now ticks: %d\n\n", stats->totalTicks);
-
-  Thread *t1 = new Thread("forked thread 1", 1);
-  Thread *t2 = new Thread("forked thread 2", 2);
-  Thread *t3 = new Thread("forked thread 3", 3);
-  Thread *t4 = new Thread("forked thread 4", 4);
-
-  printf("After new thread, ticks: %d\n\n", stats->totalTicks);
-
-  t4->Fork(SimpleThread_ticks, (void *)4);
-  t3->Fork(SimpleThread_ticks, (void *)3);
-  t2->Fork(SimpleThread_ticks, (void *)2);
-  t1->Fork(SimpleThread_ticks, (void *)1);
-
+  int priors[4] = {1, 5, 10, 15};
+  char *names[4] = {"forked thread 1", "forked thread 2", "forked thread 3",
+                    "forked thread 4"};
+  for (int i = 0; i < 4; i++) {
+    Thread *t = new Thread(names[i], priors[i]);
+    t->Fork(SimpleThread_ticks, (void *)(i + 1));
+  }
   printf("After fork, ticks: %d\n\n", stats->totalTicks);
 
-  scheduler->LastSwitchTick = stats->totalTicks; // update the LastSwitchTick
   currentThread->Yield();
 }
 // end ljl

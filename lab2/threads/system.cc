@@ -62,18 +62,24 @@ static void TimerInterruptHandler(int dummy) {
 }
 
 static void rrTimerInterruptHandler(int dummy) {
-  int ticks = stats->totalTicks - scheduler->LastSwitchTick;
-  printf("Timer interrupt duration: %d\n", ticks);
-  if (ticks >= TimerTicks) {
-    if (interrupt->getStatus() != IdleMode) { // readyList非空
-      printf("Context Switching\n");
+  printf("\n\n\n--------------------------------\n");
+  printf("time interrupt at totalTicks %d\n", stats->totalTicks);
+  currentThread->increaseTimeSliceNum();
+  if (interrupt->getStatus() != IdleMode) {
+    Thread *pendingThread = scheduler->GetFirst();
+    if (pendingThread != NULL &&
+        pendingThread->getDynamicPrior() < currentThread->getDynamicPrior()) {
+      printf("context switching at totalTicks %d\n",
+             stats->totalTicks);
+      printf("--------------------------------\n\n\n");
       interrupt->YieldOnReturn();
-      scheduler->LastSwitchTick = stats->totalTicks;
     } else {
-      printf("readyList is empty\n");
+      printf("No context switching happens\n");
+      printf("--------------------------------\n\n\n");
     }
   } else {
-    printf("too short to context switching.\n");
+    printf("readyList is empty\n");
+    printf("--------------------------------\n\n\n");
   }
 }
 

@@ -19,7 +19,6 @@
 
 class Scheduler {
 public:
-  int LastSwitchTick; // 上次切换时间片的时间
   Scheduler();  // Initialize list of ready threads
   ~Scheduler(); // De-allocate ready list
 
@@ -28,6 +27,7 @@ public:
                                    // list, if any, and return thread.
   void Run(Thread *nextThread);    // Cause nextThread to start running
   void Print();                    // Print contents of ready list
+  Thread *GetFirst(); // find first thrad on the ready list without side effects
 
 private:
   List *readyList; // queue of threads that are ready to run,
