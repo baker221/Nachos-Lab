@@ -27,7 +27,10 @@
 // 	Initialize the list of ready but not running threads to empty.
 //----------------------------------------------------------------------
 
-Scheduler::Scheduler() { readyList = new List; }
+Scheduler::Scheduler() {
+  readyList = new List;
+  LastSwitchTick = 0;
+}
 
 //----------------------------------------------------------------------
 // Scheduler::~Scheduler
@@ -51,9 +54,9 @@ void Scheduler::ReadyToRun(Thread *thread) {
   // readyList->Append((void *)thread);
   // ljl begin
   readyList->SortedInsert((void *)thread, thread->getPriority());
-  if (currentThread->getPriority() > thread->getPriority()) {
-    currentThread->Yield();
-  }
+  // if (currentThread->getPriority() > thread->getPriority()) {
+  //   currentThread->Yield();
+  // }
   // ljl end
 }
 
@@ -68,7 +71,7 @@ void Scheduler::ReadyToRun(Thread *thread) {
 Thread *Scheduler::FindNextToRun() {
   return (Thread *)readyList->SortedRemove(NULL);
   // return (Thread *)readyList->Remove();
-  }
+}
 
 //----------------------------------------------------------------------
 // Scheduler::Run

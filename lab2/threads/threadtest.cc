@@ -76,6 +76,42 @@ void ThreadPriorityTest() {
 }
 // end ljl
 
+// begin ljl
+//----------------------------------------------------------------------
+// ThreadRRTest()
+//----------------------------------------------------------------------
+void SimpleThread_ticks(int which) {
+  int num;
+  for (num = 0; num < 20; num++) {
+    printf("*** thread %d looped %d times, now totalTicks: %d\n", which, num,
+           stats->totalTicks);
+    interrupt->OneTick();
+  }
+}
+void ThreadRRTest() {
+  DEBUG('t', "Entering ThreadRRTest");
+
+  printf("before true rrtest, now ticks: %d\n\n", stats->totalTicks);
+
+  Thread *t1 = new Thread("forked thread 1", 1);
+  Thread *t2 = new Thread("forked thread 2", 2);
+  Thread *t3 = new Thread("forked thread 3", 3);
+  Thread *t4 = new Thread("forked thread 4", 4);
+
+  printf("After new thread, ticks: %d\n\n", stats->totalTicks);
+
+  t4->Fork(SimpleThread_ticks, (void *)4);
+  t3->Fork(SimpleThread_ticks, (void *)3);
+  t2->Fork(SimpleThread_ticks, (void *)2);
+  t1->Fork(SimpleThread_ticks, (void *)1);
+
+  printf("After fork, ticks: %d\n\n", stats->totalTicks);
+
+  scheduler->LastSwitchTick = stats->totalTicks; // update the LastSwitchTick
+  currentThread->Yield();
+}
+// end ljl
+
 //----------------------------------------------------------------------
 // ThreadTest
 // 	Invoke a test routine.
@@ -88,6 +124,9 @@ void ThreadTest() {
     break;
   case 2:
     ThreadPriorityTest();
+    break;
+  case 3:
+    ThreadRRTest();
     break;
   default:
     printf("No test specified.\n");

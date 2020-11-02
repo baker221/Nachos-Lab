@@ -19,6 +19,7 @@
 
 class Scheduler {
 public:
+  int LastSwitchTick; // 上次切换时间片的时间
   Scheduler();  // Initialize list of ready threads
   ~Scheduler(); // De-allocate ready list
 

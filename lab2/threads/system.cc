@@ -7,6 +7,7 @@
 
 #include "system.h"
 #include "copyright.h"
+#include "stats.h"
 
 // This defines *all* of the global data structures used by Nachos.
 // These are all initialized and de-allocated by this file.
@@ -60,6 +61,22 @@ static void TimerInterruptHandler(int dummy) {
     interrupt->YieldOnReturn();
 }
 
+static void rrTimerInterruptHandler(int dummy) {
+  int ticks = stats->totalTicks - scheduler->LastSwitchTick;
+  printf("Timer interrupt duration: %d\n", ticks);
+  if (ticks >= TimerTicks) {
+    if (interrupt->getStatus() != IdleMode) { // readyList非空
+      printf("Context Switching\n");
+      interrupt->YieldOnReturn();
+      scheduler->LastSwitchTick = stats->totalTicks;
+    } else {
+      printf("readyList is empty\n");
+    }
+  } else {
+    printf("too short to context switching.\n");
+  }
+}
+
 //----------------------------------------------------------------------
 // Initialize
 // 	Initialize Nachos global data structures.  Interpret command
@@ -74,6 +91,7 @@ void Initialize(int argc, char **argv) {
   int argCount;
   char *debugArgs = "";
   bool randomYield = FALSE;
+  bool rrflag = FALSE;
 
 #ifdef USER_PROGRAM
   bool debugUserProg = FALSE; // single step user program
@@ -100,6 +118,10 @@ void Initialize(int argc, char **argv) {
       RandomInit(atoi(*(argv + 1))); // initialize pseudo-random
                                      // number generator
       randomYield = TRUE;
+      argCount = 2;
+    } else if (!strcmp(*argv, "-rr")) {
+      ASSERT(argc > 1);
+      rrflag = TRUE;
       argCount = 2;
     }
 #ifdef USER_PROGRAM
@@ -129,6 +151,9 @@ void Initialize(int argc, char **argv) {
   scheduler = new Scheduler(); // initialize the ready queue
   if (randomYield)             // start the timer (if needed)
     timer = new Timer(TimerInterruptHandler, 0, randomYield);
+  if (rrflag) {
+    timer = new Timer(rrTimerInterruptHandler, 0, FALSE);
+  }
 
   threadToBeDestroyed = NULL;
 
