@@ -92,13 +92,50 @@ void Semaphore::V() {
 // Dummy functions -- so we can compile our later assignments
 // Note -- without a correct implementation of Condition::Wait(),
 // the test case in the network assignment won't work!
-Lock::Lock(char *debugName) {}
-Lock::~Lock() {}
-void Lock::Acquire() {}
-void Lock::Release() {}
+Lock::Lock(char *debugName)
+    : name(debugName), truelock(new Semaphore("lock", 1)), owner(NULL) {}
+Lock::~Lock() { delete truelock; }
+void Lock::Acquire() {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  truelock->P();
+  owner = currentThread;
+  (void)interrupt->SetLevel(oldLevel);
+}
+void Lock::Release() {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(owner == currentThread);
+  owner = NULL;
+  truelock->V();
+  (void)interrupt->SetLevel(oldLevel);
+}
+bool Lock::isHeldByCurrentThread() { return currentThread == owner; }
 
-Condition::Condition(char *debugName) {}
-Condition::~Condition() {}
-void Condition::Wait(Lock *conditionLock) { ASSERT(FALSE); }
-void Condition::Signal(Lock *conditionLock) {}
-void Condition::Broadcast(Lock *conditionLock) {}
+Condition::Condition(char *debugName)
+    : name(debugName), wait_queue(new List()) {}
+Condition::~Condition() { delete wait_queue; }
+void Condition::Wait(Lock *conditionLock) {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(conditionLock->isHeldByCurrentThread());
+  conditionLock->Release();
+  wait_queue->Append(currentThread);
+  currentThread->Sleep();
+  conditionLock->Acquire();
+  (void)interrupt->SetLevel(oldLevel);
+}
+void Condition::Signal(Lock *conditionLock) {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(conditionLock->isHeldByCurrentThread());
+  if (!wait_queue->IsEmpty()) {
+    Thread *next = (Thread *)wait_queue->Remove();
+    scheduler->ReadyToRun(next);
+  }
+  (void)interrupt->SetLevel(oldLevel);
+}
+void Condition::Broadcast(Lock *conditionLock) {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(conditionLock->isHeldByCurrentThread());
+  while (!wait_queue->IsEmpty()) {
+    Signal(conditionLock);
+  }
+  (void)interrupt->SetLevel(oldLevel);
+}
