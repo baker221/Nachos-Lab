@@ -139,3 +139,32 @@ void Condition::Broadcast(Lock *conditionLock) {
   }
   (void)interrupt->SetLevel(oldLevel);
 }
+
+RWLock::RWLock(char *debugName) {
+  name = debugName;
+  readNum = 0;
+  mutex = new Semaphore("mutex", 1);
+  wlock = new Semaphore("wlock", 1);
+}
+RWLock::~RWLock() {
+  delete mutex;
+  delete wlock;
+}
+void RWLock::readerIn() {
+  mutex->P();
+  if (readNum == 0) {
+    wlock->P();
+  }
+  readNum++;
+  mutex->V();
+}
+void RWLock::readerOut() {
+  mutex->P();
+  readNum--;
+  if (readNum == 0) {
+    wlock->V();
+  }
+  mutex->V();
+}
+void RWLock::writerIn() { wlock->P(); }
+void RWLock::writerOut() { wlock->V(); }

@@ -136,4 +136,21 @@ private:
   // plus some other stuff you'll need to define
   List *wait_queue;
 };
+
+class RWLock {
+public:
+  RWLock(char *debugName);
+  ~RWLock();
+  void readerIn();
+  void readerOut();
+  void writerIn();
+  void writerOut();
+
+private:
+  char *name;
+  Semaphore *mutex;
+  Semaphore *wlock;
+  int readNum;
+};
+
 #endif // SYNCH_H

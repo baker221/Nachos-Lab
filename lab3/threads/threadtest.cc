@@ -216,6 +216,41 @@ void ThreadTest_barrier() {
 }
 // end barrier
 
+// begin rwlock
+RWLock *rwlock;
+void rwThread(int which) {
+  if (which <= 2) { // reader
+    for (int i = 0; i < 10; i++) {
+      printf("reader %d prepare to read\n", which);
+      rwlock->readerIn();
+      printf("reader %d read data is %d\n", which, data);
+      currentThread->Yield(); // wait a moment
+      rwlock->readerOut();
+    }
+  } else {
+    for (int i = 0; i < 5; i++) {
+      printf("writer %d prepare to write\n", which);
+      rwlock->writerIn();
+      int olddata = data;
+      data++;
+      printf("writer %d change data from %d to %d\n", which, olddata, data);
+      currentThread->Yield();
+      rwlock->writerOut();
+    }
+  }
+}
+void ThreadTest_rwlock() {
+  DEBUG('t', "Entering ThreadTest_rwlock");
+  data = 0;
+  rwlock = new RWLock("rwlock");
+  for (int i = 0; i < 5; i++) {
+    char *name = new char[30];
+    sprintf(name, "Thread %d", i);
+    (new Thread(name))->Fork(rwThread, (void *)i);
+  }
+}
+// end rwlock
+
 //----------------------------------------------------------------------
 // ThreadTest
 // 	Invoke a test routine.
@@ -235,6 +270,9 @@ void ThreadTest() {
     break;
   case 4:
     ThreadTest_barrier();
+    break;
+  case 5:
+    ThreadTest_rwlock();
     break;
   default:
     printf("No test specified.\n");
