@@ -183,6 +183,39 @@ void ThreadTest_rw() {
 }
 // end conditon reader-writer problem
 
+// begin barrier
+int totalNum;
+int curNum;
+Lock *barrierLock;
+Condition *barrierCond;
+void barrier(int which) {
+  printf("thread %d say hello\n", which);
+  barrierLock->Acquire();
+  curNum++;
+  if (curNum < totalNum) {
+    printf("thread %d waiting for others\n", which);
+    barrierCond->Wait(barrierLock);
+  } else if (curNum == totalNum) {
+    printf("thread %d wake up other threads\n", which);
+    barrierCond->Broadcast(barrierLock);
+  }
+  barrierLock->Release();
+  printf("thread %d say goodbye\n", which);
+}
+void ThreadTest_barrier() {
+  DEBUG('t', "Entering ThreadTest_barrier");
+  totalNum = 5;
+  curNum = 0;
+  barrierLock = new Lock("barrierLock");
+  barrierCond = new Condition("barrierCond");
+  for (int i = 0; i < totalNum; i++) { // reader num
+    Thread *t = new Thread("barrier");
+    t->Fork(barrier, (void *)i);
+  }
+  return;
+}
+// end barrier
+
 //----------------------------------------------------------------------
 // ThreadTest
 // 	Invoke a test routine.
@@ -199,6 +232,9 @@ void ThreadTest() {
     break;
   case 3:
     ThreadTest_rw();
+    break;
+  case 4:
+    ThreadTest_barrier();
     break;
   default:
     printf("No test specified.\n");
