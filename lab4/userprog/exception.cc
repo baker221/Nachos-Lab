@@ -51,7 +51,17 @@
 void ExceptionHandler(ExceptionType which) {
   int type = machine->ReadRegister(2);
 
-  if ((which == SyscallException) && (type == SC_Halt)) {
+  if (which == PageFaultException) {
+    if (machine->tlb == NULL) {
+      printf("Page table page fault.\n");
+      ASSERT(FALSE);
+    } else {
+      printf("TLB miss!\n");
+      int BadVAddr = machine->ReadRegister(BadVAddrReg);
+      TLBMissHandler(BadVAddr);
+    }
+    return;
+  } else if ((which == SyscallException) && (type == SC_Halt)) {
     DEBUG('a', "Shutdown, initiated by user program.\n");
     interrupt->Halt();
   } else {

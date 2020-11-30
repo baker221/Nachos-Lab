@@ -194,7 +194,7 @@ ExceptionType Machine::Translate(int virtAddr, int *physAddr, int size,
   }
 
   // we must have either a TLB or a page table, but not both!
-  ASSERT(tlb == NULL || pageTable == NULL);
+  // ASSERT(tlb == NULL || pageTable == NULL);
   ASSERT(tlb != NULL || pageTable != NULL);
 
   // calculate the virtual page number, and offset within the page,
@@ -214,11 +214,12 @@ ExceptionType Machine::Translate(int virtAddr, int *physAddr, int size,
     }
     entry = &pageTable[vpn];
   } else {
-    for (entry = NULL, i = 0; i < TLBSize; i++)
+    for (entry = NULL, i = 0; i < TLBSize; i++) {
       if (tlb[i].valid && (tlb[i].virtualPage == vpn)) {
         entry = &tlb[i]; // FOUND!
         break;
       }
+    }
     if (entry == NULL) { // not found
       DEBUG('a', "*** no valid TLB entry found for this virtual page!\n");
       return PageFaultException; // really, this is a TLB fault,
