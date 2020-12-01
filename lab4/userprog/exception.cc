@@ -24,6 +24,36 @@
 #include "copyright.h"
 #include "syscall.h"
 #include "system.h"
+#include "machine.h"
+
+// FIFO Replace
+void FIFOReplace(TranslationEntry page) {
+  printf("Using FIFO Replace Algorithm!\n");
+  int replaceIdx = -1;
+  for (int i = 0; i < TLBSize; i++) {
+    if (machine->tlb[i].valid == FALSE) {
+      replaceIdx = i;
+      break;
+    }
+  }
+  if (replaceIdx == -1) { // FIFO
+    for (int i = 1; i < TLBSize; i++) {
+      machine->tlb[i - 1] = machine->tlb[i];
+    }
+    replaceIdx = TLBSize - 1;
+  }
+  machine->tlb[replaceIdx] = page;
+}
+
+void TLBMissHandler(int BadVAddr) {
+  unsigned int vpn = (unsigned) BadVAddr / PageSize;
+  TranslationEntry page = machine->pageTable[vpn];
+  if (!page.valid) {
+    printf("True page table page fault happens!\n");
+    ASSERT(FALSE);
+  }
+  FIFOReplace(page);
+}
 
 //----------------------------------------------------------------------
 // ExceptionHandler
