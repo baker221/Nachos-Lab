@@ -1,2 +1,7 @@
 .vscode/
+core
 nachos
+DISK
+*.o
+swtch.s
+*~
