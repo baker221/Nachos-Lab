@@ -62,10 +62,16 @@ Machine::Machine(bool debug) {
   mainMemory = new char[MemorySize];
   for (i = 0; i < MemorySize; i++)
     mainMemory[i] = 0;
+  bitmap = new BitMap(NumPhysPages);
 #ifdef USE_TLB
   tlb = new TranslationEntry[TLBSize];
-  for (i = 0; i < TLBSize; i++)
+  tlbUseCounter = new int[TLBSize];
+  for (i = 0; i < TLBSize; i++) {
     tlb[i].valid = FALSE;
+    tlbUseCounter[i] = 0;
+  }
+  tlbTotalCount = 0;
+  tlbMissCount = 0;
   pageTable = NULL;
 #else // use linear page table
   tlb = NULL;
@@ -200,4 +206,11 @@ void Machine::WriteRegister(int num, int value) {
   ASSERT((num >= 0) && (num < NumTotalRegs));
   // DEBUG('m', "WriteRegister %d, value %d\n", num, value);
   registers[num] = value;
+}
+
+int Machine::allocMem() {
+  return bitmap->Find();
+}
+void Machine::freeMem() {
+  return;
 }

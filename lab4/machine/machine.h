@@ -25,6 +25,7 @@
 #include "disk.h"
 #include "translate.h"
 #include "utility.h"
+#include "bitmap.h"
 
 // Definitions related to the size, and format of user memory
 
@@ -177,6 +178,14 @@ public:
 
   TranslationEntry *tlb; // this pointer should be considered
                          // "read-only" to Nachos kernel code
+  int *tlbUseCounter;
+
+  int tlbTotalCount;
+  int tlbMissCount;
+
+  BitMap *bitmap;
+  int allocMem();
+  void freeMem();
 
   TranslationEntry *pageTable;
   unsigned int pageTableSize;

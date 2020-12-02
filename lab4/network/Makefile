@@ -26,80 +26,59 @@ include ../Makefile.dep
 #-----------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- make depend uses it
 # DEPENDENCIES MUST END AT END OF FILE
-main.o: ../threads/main.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../threads/system.h ../machine/interrupt.h \
- ../threads/copyright.h ../threads/list.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+main.o: ../threads/main.cc ../threads/copyright.h ../threads/system.h \
+ ../machine/interrupt.h ../threads/copyright.h ../threads/list.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/scheduler.h ../threads/list.h \
+ /usr/include/xlocale.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
  ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-list.o: ../threads/list.cc /usr/include/stdc-predef.h ../threads/list.h \
- ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
- ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
- /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
- /usr/include/i386-linux-gnu/gnu/stubs.h \
- /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
- /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
- /usr/include/i386-linux-gnu/bits/stdio_lim.h \
- /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h
-scheduler.o: ../threads/scheduler.cc /usr/include/stdc-predef.h \
- ../threads/scheduler.h ../threads/copyright.h ../threads/list.h \
+list.o: ../threads/list.cc ../threads/list.h ../threads/copyright.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
- ../threads/copyright.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/thread.h ../userprog/addrspace.h \
+ /usr/include/xlocale.h
+scheduler.o: ../threads/scheduler.cc ../threads/scheduler.h \
+ ../threads/copyright.h ../threads/list.h ../threads/utility.h \
+ ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../threads/utility.h \
  ../machine/translate.h ../machine/machine.h ../machine/disk.h \
  ../machine/translate.h ../threads/system.h ../machine/interrupt.h \
@@ -107,29 +86,21 @@ scheduler.o: ../threads/scheduler.cc /usr/include/stdc-predef.h \
  ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h \
  ../network/post.h ../machine/network.h ../threads/synchlist.h \
  ../threads/synch.h
-synch.o: ../threads/synch.cc /usr/include/stdc-predef.h \
- ../threads/synch.h ../threads/copyright.h ../threads/list.h \
- ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
- ../threads/copyright.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+synch.o: ../threads/synch.cc ../threads/synch.h ../threads/copyright.h \
+ ../threads/list.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/thread.h ../userprog/addrspace.h \
+ /usr/include/xlocale.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../threads/utility.h \
  ../machine/translate.h ../machine/machine.h ../machine/disk.h \
  ../machine/translate.h ../threads/system.h ../machine/interrupt.h \
@@ -137,84 +108,62 @@ synch.o: ../threads/synch.cc /usr/include/stdc-predef.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h
-synchlist.o: ../threads/synchlist.cc /usr/include/stdc-predef.h \
- ../threads/synchlist.h ../threads/copyright.h ../threads/list.h \
- ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
- ../threads/copyright.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+synchlist.o: ../threads/synchlist.cc ../threads/synchlist.h \
+ ../threads/copyright.h ../threads/list.h ../threads/utility.h \
+ ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/synch.h ../threads/thread.h \
+ /usr/include/xlocale.h ../threads/synch.h ../threads/thread.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
  ../threads/utility.h ../machine/translate.h ../machine/machine.h \
  ../machine/disk.h ../machine/translate.h
-system.o: ../threads/system.cc /usr/include/stdc-predef.h \
- ../threads/system.h ../threads/copyright.h ../machine/interrupt.h \
- ../threads/copyright.h ../threads/list.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+system.o: ../threads/system.cc ../threads/system.h ../threads/copyright.h \
+ ../machine/interrupt.h ../threads/copyright.h ../threads/list.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/scheduler.h ../threads/list.h \
+ /usr/include/xlocale.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
  ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-thread.o: ../threads/thread.cc /usr/include/stdc-predef.h \
- ../threads/thread.h ../threads/copyright.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+thread.o: ../threads/thread.cc ../threads/thread.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../userprog/addrspace.h ../filesys/filesys.h \
+ /usr/include/xlocale.h ../userprog/addrspace.h ../filesys/filesys.h \
  ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h \
  ../threads/switch.h ../threads/synch.h ../threads/list.h \
@@ -222,81 +171,59 @@ thread.o: ../threads/thread.cc /usr/include/stdc-predef.h \
  ../threads/scheduler.h ../machine/stats.h ../machine/timer.h \
  ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h \
  ../network/post.h ../machine/network.h ../threads/synchlist.h
-utility.o: ../threads/utility.cc /usr/include/stdc-predef.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+utility.o: ../threads/utility.cc ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/stdarg.h
-threadtest.o: ../threads/threadtest.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../machine/elevatortest.h ../threads/copyright.h \
- ../threads/system.h ../machine/interrupt.h ../threads/list.h \
- ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/xlocale.h ../threads/stdarg.h
+threadtest.o: ../threads/threadtest.cc ../threads/copyright.h \
+ ../machine/elevatortest.h ../threads/copyright.h ../threads/system.h \
+ ../machine/interrupt.h ../threads/list.h ../threads/utility.h \
+ ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/scheduler.h ../threads/list.h \
+ /usr/include/xlocale.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
  ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-interrupt.o: ../machine/interrupt.cc /usr/include/stdc-predef.h \
- ../machine/interrupt.h ../threads/copyright.h ../threads/list.h \
- ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+interrupt.o: ../machine/interrupt.cc ../machine/interrupt.h \
+ ../threads/copyright.h ../threads/list.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/system.h ../machine/interrupt.h \
+ /usr/include/xlocale.h ../threads/system.h ../machine/interrupt.h \
  ../threads/scheduler.h ../threads/list.h ../threads/thread.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
  ../threads/utility.h ../machine/translate.h ../machine/machine.h \
@@ -304,84 +231,57 @@ interrupt.o: ../machine/interrupt.cc /usr/include/stdc-predef.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-sysdep.o: ../machine/sysdep.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h /usr/include/signal.h /usr/include/features.h \
+sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
+ /usr/include/signal.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
  /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
  /usr/include/i386-linux-gnu/bits/types.h \
  /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/signum.h \
- /usr/include/i386-linux-gnu/bits/signum-generic.h \
- /usr/include/i386-linux-gnu/bits/types/sig_atomic_t.h \
- /usr/include/i386-linux-gnu/bits/types/sigset_t.h \
- /usr/include/i386-linux-gnu/bits/types/__sigset_t.h \
- /usr/include/i386-linux-gnu/bits/types/struct_timespec.h \
- /usr/include/i386-linux-gnu/bits/types/siginfo_t.h \
- /usr/include/i386-linux-gnu/bits/types/__sigval_t.h \
- /usr/include/i386-linux-gnu/bits/siginfo-arch.h \
- /usr/include/i386-linux-gnu/bits/siginfo-consts.h \
- /usr/include/i386-linux-gnu/bits/siginfo-consts-arch.h \
- /usr/include/i386-linux-gnu/bits/types/sigval_t.h \
- /usr/include/i386-linux-gnu/bits/types/sigevent_t.h \
- /usr/include/i386-linux-gnu/bits/sigevent-consts.h \
+ /usr/include/i386-linux-gnu/bits/signum.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/bits/siginfo.h \
  /usr/include/i386-linux-gnu/bits/sigaction.h \
  /usr/include/i386-linux-gnu/bits/sigcontext.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
- /usr/include/i386-linux-gnu/bits/types/stack_t.h \
- /usr/include/i386-linux-gnu/sys/ucontext.h \
+ /usr/include/i386-linux-gnu/asm/sigcontext.h /usr/include/linux/types.h \
+ /usr/include/i386-linux-gnu/asm/types.h /usr/include/asm-generic/types.h \
+ /usr/include/asm-generic/int-ll64.h \
+ /usr/include/i386-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/i386-linux-gnu/asm/posix_types.h \
+ /usr/include/i386-linux-gnu/asm/posix_types_32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/sigstack.h \
- /usr/include/i386-linux-gnu/bits/ss_flags.h \
- /usr/include/i386-linux-gnu/bits/types/struct_sigstack.h \
+ /usr/include/i386-linux-gnu/sys/ucontext.h \
  /usr/include/i386-linux-gnu/bits/pthreadtypes.h \
- /usr/include/i386-linux-gnu/bits/thread-shared-types.h \
- /usr/include/i386-linux-gnu/bits/pthreadtypes-arch.h \
  /usr/include/i386-linux-gnu/bits/sigthread.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
- /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+ ../threads/stdarg.h /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h /usr/include/i386-linux-gnu/sys/file.h \
+ /usr/include/xlocale.h /usr/include/i386-linux-gnu/sys/file.h \
  /usr/include/fcntl.h /usr/include/i386-linux-gnu/bits/fcntl.h \
- /usr/include/i386-linux-gnu/bits/fcntl-linux.h \
- /usr/include/i386-linux-gnu/bits/types/struct_iovec.h \
- /usr/include/linux/falloc.h /usr/include/i386-linux-gnu/bits/stat.h \
- /usr/include/i386-linux-gnu/sys/mman.h \
- /usr/include/i386-linux-gnu/bits/mman.h \
- /usr/include/i386-linux-gnu/bits/mman-linux.h \
- /usr/include/i386-linux-gnu/bits/mman-shared.h \
- /usr/include/i386-linux-gnu/sys/socket.h \
- /usr/include/i386-linux-gnu/bits/socket.h \
- /usr/include/i386-linux-gnu/sys/types.h \
- /usr/include/i386-linux-gnu/bits/types/clock_t.h \
- /usr/include/i386-linux-gnu/bits/types/clockid_t.h \
- /usr/include/i386-linux-gnu/bits/types/time_t.h \
- /usr/include/i386-linux-gnu/bits/types/timer_t.h \
- /usr/include/i386-linux-gnu/bits/stdint-intn.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/sys/types.h /usr/include/endian.h \
  /usr/include/i386-linux-gnu/bits/endian.h \
  /usr/include/i386-linux-gnu/bits/byteswap.h \
- /usr/include/i386-linux-gnu/bits/byteswap-16.h \
- /usr/include/i386-linux-gnu/bits/uintn-identity.h \
  /usr/include/i386-linux-gnu/sys/select.h \
  /usr/include/i386-linux-gnu/bits/select.h \
- /usr/include/i386-linux-gnu/bits/types/struct_timeval.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
  /usr/include/i386-linux-gnu/sys/sysmacros.h \
- /usr/include/i386-linux-gnu/bits/sysmacros.h \
- /usr/include/i386-linux-gnu/bits/socket_type.h \
+ /usr/include/i386-linux-gnu/bits/uio.h \
+ /usr/include/i386-linux-gnu/bits/stat.h \
+ /usr/include/i386-linux-gnu/sys/mman.h \
+ /usr/include/i386-linux-gnu/bits/mman.h \
+ /usr/include/i386-linux-gnu/sys/socket.h \
+ /usr/include/i386-linux-gnu/sys/uio.h \
+ /usr/include/i386-linux-gnu/bits/socket.h \
  /usr/include/i386-linux-gnu/bits/sockaddr.h \
  /usr/include/i386-linux-gnu/asm/socket.h \
  /usr/include/asm-generic/socket.h \
  /usr/include/i386-linux-gnu/asm/sockios.h \
  /usr/include/asm-generic/sockios.h \
- /usr/include/i386-linux-gnu/bits/types/struct_osockaddr.h \
  /usr/include/i386-linux-gnu/sys/time.h \
  /usr/include/i386-linux-gnu/sys/un.h /usr/include/errno.h \
  /usr/include/i386-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
@@ -389,64 +289,47 @@ sysdep.o: ../machine/sysdep.cc /usr/include/stdc-predef.h \
  /usr/include/asm-generic/errno-base.h /usr/include/unistd.h \
  /usr/include/i386-linux-gnu/bits/posix_opt.h \
  /usr/include/i386-linux-gnu/bits/environments.h \
- /usr/include/i386-linux-gnu/bits/confname.h \
- /usr/include/i386-linux-gnu/bits/getopt_posix.h \
- /usr/include/i386-linux-gnu/bits/getopt_core.h ../machine/interrupt.h \
- ../threads/list.h ../threads/copyright.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h ../threads/system.h \
- ../machine/interrupt.h ../threads/scheduler.h ../threads/list.h \
- ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
- ../machine/machine.h ../machine/disk.h ../machine/translate.h \
- ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
- ../machine/disk.h ../threads/synch.h ../network/post.h \
- ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-stats.o: ../machine/stats.cc /usr/include/stdc-predef.h \
- ../machine/stats.h ../threads/copyright.h ../threads/utility.h \
- ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ ../threads/system.h ../machine/interrupt.h ../threads/scheduler.h \
+ ../threads/list.h ../threads/thread.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../threads/utility.h \
+ ../machine/translate.h ../machine/machine.h ../machine/disk.h \
+ ../machine/translate.h ../machine/stats.h ../machine/timer.h \
+ ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h \
+ ../network/post.h ../machine/network.h ../threads/synchlist.h \
+ ../threads/synch.h
+stats.o: ../machine/stats.cc ../machine/stats.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h
-timer.o: ../machine/timer.cc /usr/include/stdc-predef.h \
- ../machine/timer.h ../threads/copyright.h ../threads/utility.h \
- ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/xlocale.h
+timer.o: ../machine/timer.cc ../machine/timer.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/system.h ../machine/interrupt.h \
+ /usr/include/xlocale.h ../threads/system.h ../machine/interrupt.h \
  ../threads/list.h ../threads/utility.h ../threads/scheduler.h \
  ../threads/list.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
@@ -454,56 +337,42 @@ timer.o: ../machine/timer.cc /usr/include/stdc-predef.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-elevatortest.o: ../machine/elevatortest.cc /usr/include/stdc-predef.h \
- ../machine/elevatortest.h ../threads/copyright.h ../machine/elevator.h \
- ../threads/list.h ../threads/copyright.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+elevatortest.o: ../machine/elevatortest.cc ../machine/elevatortest.h \
+ ../threads/copyright.h ../machine/elevator.h ../threads/list.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/utility.h ../threads/synch.h \
+ /usr/include/xlocale.h ../threads/utility.h ../threads/synch.h \
  ../threads/list.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h \
  ../threads/thread.h
-elevator.o: ../machine/elevator.cc /usr/include/stdc-predef.h \
- ../machine/elevator.h ../threads/copyright.h ../threads/list.h \
- ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+elevator.o: ../machine/elevator.cc ../machine/elevator.h \
+ ../threads/copyright.h ../threads/list.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/utility.h ../threads/system.h \
+ /usr/include/xlocale.h ../threads/utility.h ../threads/system.h \
  ../machine/interrupt.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
  ../filesys/openfile.h ../machine/translate.h ../machine/machine.h \
@@ -511,29 +380,22 @@ elevator.o: ../machine/elevator.cc /usr/include/stdc-predef.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-addrspace.o: ../userprog/addrspace.cc /usr/include/stdc-predef.h \
- ../userprog/addrspace.h ../threads/copyright.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/utility.h ../threads/copyright.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+addrspace.o: ../userprog/addrspace.cc ../userprog/addrspace.h \
+ ../threads/copyright.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/translate.h ../bin/noff.h \
+ /usr/include/xlocale.h ../machine/translate.h ../bin/noff.h \
  ../threads/system.h ../machine/interrupt.h ../threads/list.h \
  ../threads/utility.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../machine/machine.h \
@@ -541,82 +403,61 @@ addrspace.o: ../userprog/addrspace.cc /usr/include/stdc-predef.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-bitmap.o: ../userprog/bitmap.cc /usr/include/stdc-predef.h \
- ../userprog/bitmap.h ../threads/copyright.h ../filesys/openfile.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+bitmap.o: ../userprog/bitmap.cc ../userprog/bitmap.h \
+ ../threads/copyright.h ../filesys/openfile.h ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h
-exception.o: ../userprog/exception.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../userprog/syscall.h ../threads/system.h \
- ../threads/copyright.h ../machine/interrupt.h ../threads/list.h \
- ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/xlocale.h
+exception.o: ../userprog/exception.cc ../threads/copyright.h \
+ ../machine/machine.h ../machine/disk.h ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/scheduler.h ../threads/list.h \
+ /usr/include/xlocale.h ../machine/translate.h ../userprog/syscall.h \
+ ../threads/system.h ../machine/interrupt.h ../threads/list.h \
+ ../threads/utility.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
- ../machine/machine.h ../machine/disk.h ../machine/translate.h \
- ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
- ../machine/disk.h ../threads/synch.h ../network/post.h \
- ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-progtest.o: ../userprog/progtest.cc /usr/include/stdc-predef.h \
- ../userprog/addrspace.h ../threads/copyright.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/utility.h ../threads/copyright.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ ../filesys/openfile.h ../machine/translate.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
+ ../threads/synch.h ../network/post.h ../machine/network.h \
+ ../threads/synchlist.h ../threads/synch.h
+progtest.o: ../userprog/progtest.cc ../userprog/addrspace.h \
+ ../threads/copyright.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/translate.h ../machine/console.h \
+ /usr/include/xlocale.h ../machine/translate.h ../machine/console.h \
  ../threads/synch.h ../threads/list.h ../threads/utility.h \
  ../threads/thread.h ../userprog/addrspace.h ../machine/machine.h \
  ../machine/disk.h ../machine/translate.h ../threads/system.h \
@@ -624,29 +465,21 @@ progtest.o: ../userprog/progtest.cc /usr/include/stdc-predef.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-console.o: ../machine/console.cc /usr/include/stdc-predef.h \
- ../machine/console.h ../threads/copyright.h ../threads/utility.h \
- ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+console.o: ../machine/console.cc ../machine/console.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/copyright.h \
+ ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/system.h ../machine/interrupt.h \
+ /usr/include/xlocale.h ../threads/system.h ../machine/interrupt.h \
  ../threads/list.h ../threads/utility.h ../threads/scheduler.h \
  ../threads/list.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
@@ -654,29 +487,22 @@ console.o: ../machine/console.cc /usr/include/stdc-predef.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-machine.o: ../machine/machine.cc /usr/include/stdc-predef.h \
- ../machine/machine.h ../threads/copyright.h ../machine/disk.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+machine.o: ../machine/machine.cc ../machine/machine.h \
+ ../threads/copyright.h ../machine/disk.h ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/translate.h ../threads/system.h \
+ /usr/include/xlocale.h ../machine/translate.h ../threads/system.h \
  ../machine/interrupt.h ../threads/list.h ../threads/utility.h \
  ../threads/scheduler.h ../threads/list.h ../threads/thread.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
@@ -684,29 +510,22 @@ machine.o: ../machine/machine.cc /usr/include/stdc-predef.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-mipssim.o: ../machine/mipssim.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../machine/machine.h ../machine/disk.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
+ ../machine/machine.h ../machine/disk.h ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/translate.h ../machine/mipssim.h \
+ /usr/include/xlocale.h ../machine/translate.h ../machine/mipssim.h \
  ../threads/system.h ../machine/interrupt.h ../threads/list.h \
  ../threads/utility.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
@@ -714,29 +533,22 @@ mipssim.o: ../machine/mipssim.cc /usr/include/stdc-predef.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../machine/disk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-translate.o: ../machine/translate.cc /usr/include/stdc-predef.h \
- ../userprog/addrspace.h ../threads/copyright.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/utility.h ../threads/copyright.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+translate.o: ../machine/translate.cc ../userprog/addrspace.h \
+ ../threads/copyright.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/translate.h ../machine/machine.h \
+ /usr/include/xlocale.h ../machine/translate.h ../machine/machine.h \
  ../machine/disk.h ../machine/translate.h ../threads/system.h \
  ../machine/interrupt.h ../threads/list.h ../threads/utility.h \
  ../threads/scheduler.h ../threads/list.h ../threads/thread.h \
@@ -744,53 +556,39 @@ translate.o: ../machine/translate.cc /usr/include/stdc-predef.h \
  ../filesys/synchdisk.h ../machine/disk.h ../threads/synch.h \
  ../network/post.h ../machine/network.h ../threads/synchlist.h \
  ../threads/synch.h
-directory.o: ../filesys/directory.cc /usr/include/stdc-predef.h \
- ../filesys/directory.h ../threads/copyright.h ../filesys/openfile.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+directory.o: ../filesys/directory.cc ../filesys/directory.h \
+ ../threads/copyright.h ../filesys/openfile.h ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../filesys/filehdr.h ../userprog/bitmap.h \
+ /usr/include/xlocale.h ../filesys/filehdr.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../machine/disk.h
-filehdr.o: ../filesys/filehdr.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../filesys/filehdr.h ../userprog/bitmap.h \
- ../filesys/openfile.h ../threads/utility.h ../threads/copyright.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+filehdr.o: ../filesys/filehdr.cc ../threads/copyright.h \
+ ../filesys/filehdr.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/disk.h ../threads/system.h \
+ /usr/include/xlocale.h ../machine/disk.h ../threads/system.h \
  ../machine/interrupt.h ../threads/list.h ../threads/utility.h \
  ../threads/scheduler.h ../threads/list.h ../threads/thread.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
@@ -798,53 +596,38 @@ filehdr.o: ../filesys/filehdr.cc /usr/include/stdc-predef.h \
  ../machine/translate.h ../machine/stats.h ../machine/timer.h \
  ../filesys/synchdisk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h
-filesys.o: ../filesys/filesys.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../userprog/bitmap.h ../filesys/openfile.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
- /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
- /usr/include/i386-linux-gnu/gnu/stubs.h \
- /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
- /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
- /usr/include/i386-linux-gnu/bits/stdio_lim.h \
- /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../filesys/directory.h ../filesys/openfile.h \
- ../machine/disk.h ../filesys/filehdr.h ../filesys/filesys.h
-fstest.o: ../filesys/fstest.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../machine/disk.h ../threads/utility.h \
+filesys.o: ../filesys/filesys.cc ../threads/copyright.h \
+ ../userprog/bitmap.h ../filesys/openfile.h ../threads/utility.h \
  ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../filesys/filesys.h ../filesys/openfile.h \
+ /usr/include/xlocale.h ../filesys/directory.h ../filesys/openfile.h \
+ ../machine/disk.h ../filesys/filehdr.h ../filesys/filesys.h
+fstest.o: ../filesys/fstest.cc ../threads/copyright.h ../machine/disk.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../filesys/filesys.h ../filesys/openfile.h \
  ../machine/stats.h ../threads/system.h ../machine/interrupt.h \
  ../threads/list.h ../threads/utility.h ../threads/scheduler.h \
  ../threads/list.h ../threads/thread.h ../userprog/addrspace.h \
@@ -853,29 +636,21 @@ fstest.o: ../filesys/fstest.cc /usr/include/stdc-predef.h \
  ../filesys/synchdisk.h ../threads/synch.h ../network/post.h \
  ../machine/network.h ../threads/synchlist.h ../threads/synch.h \
  ../threads/thread.h
-openfile.o: ../filesys/openfile.cc /usr/include/stdc-predef.h \
- ../filesys/openfile.h ../threads/copyright.h ../threads/utility.h \
- ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+openfile.o: ../filesys/openfile.cc ../filesys/openfile.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/copyright.h \
+ ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../filesys/filehdr.h ../userprog/bitmap.h \
+ /usr/include/xlocale.h ../filesys/filehdr.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../machine/disk.h ../threads/system.h \
  ../machine/interrupt.h ../threads/list.h ../threads/utility.h \
  ../threads/scheduler.h ../threads/list.h ../threads/thread.h \
@@ -884,54 +659,40 @@ openfile.o: ../filesys/openfile.cc /usr/include/stdc-predef.h \
  ../machine/stats.h ../machine/timer.h ../filesys/synchdisk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-synchdisk.o: ../filesys/synchdisk.cc /usr/include/stdc-predef.h \
- ../filesys/synchdisk.h ../threads/copyright.h ../machine/disk.h \
- ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+synchdisk.o: ../filesys/synchdisk.cc ../filesys/synchdisk.h \
+ ../threads/copyright.h ../machine/disk.h ../threads/utility.h \
+ ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/synch.h ../threads/list.h \
+ /usr/include/xlocale.h ../threads/synch.h ../threads/list.h \
  ../threads/utility.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h
-disk.o: ../machine/disk.cc /usr/include/stdc-predef.h ../machine/disk.h \
- ../threads/copyright.h ../threads/utility.h ../threads/copyright.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+disk.o: ../machine/disk.cc ../machine/disk.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/system.h ../machine/interrupt.h \
+ /usr/include/xlocale.h ../threads/system.h ../machine/interrupt.h \
  ../threads/list.h ../threads/utility.h ../threads/scheduler.h \
  ../threads/list.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
@@ -939,29 +700,22 @@ disk.o: ../machine/disk.cc /usr/include/stdc-predef.h ../machine/disk.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h ../machine/network.h \
  ../threads/synchlist.h ../threads/synch.h
-nettest.o: ../network/nettest.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../machine/interrupt.h ../threads/list.h \
- ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
- ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+nettest.o: ../network/nettest.cc ../threads/copyright.h \
+ ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
+ ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../machine/network.h ../threads/utility.h \
+ /usr/include/xlocale.h ../machine/network.h ../threads/utility.h \
  ../network/post.h ../threads/synchlist.h ../threads/list.h \
  ../threads/synch.h ../threads/thread.h ../userprog/addrspace.h \
  ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
@@ -969,56 +723,41 @@ nettest.o: ../network/nettest.cc /usr/include/stdc-predef.h \
  ../threads/system.h ../threads/scheduler.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchdisk.h ../machine/disk.h \
  ../threads/synch.h ../network/post.h
-post.o: ../network/post.cc /usr/include/stdc-predef.h ../network/post.h \
- ../threads/copyright.h ../machine/network.h ../threads/utility.h \
- ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
- /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+post.o: ../network/post.cc ../network/post.h ../threads/copyright.h \
+ ../machine/network.h ../threads/utility.h ../threads/copyright.h \
+ ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/synchlist.h ../threads/list.h \
+ /usr/include/xlocale.h ../threads/synchlist.h ../threads/list.h \
  ../threads/utility.h ../threads/synch.h ../threads/thread.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
  ../machine/translate.h ../machine/machine.h ../machine/disk.h \
  ../machine/translate.h
-network.o: ../machine/network.cc /usr/include/stdc-predef.h \
- ../threads/copyright.h ../threads/system.h ../threads/copyright.h \
- ../machine/interrupt.h ../threads/list.h ../threads/utility.h \
- ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
- /usr/include/i386-linux-gnu/bits/libc-header-start.h \
- /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+network.o: ../machine/network.cc ../threads/copyright.h \
+ ../threads/system.h ../threads/copyright.h ../machine/interrupt.h \
+ ../threads/list.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
- /usr/include/i386-linux-gnu/bits/long-double.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
  /usr/include/i386-linux-gnu/gnu/stubs-32.h \
- /usr/lib/gcc/i686-linux-gnu/7/include/stddef.h \
+ /usr/lib/gcc/i686-linux-gnu/4.6/include/stddef.h \
  /usr/include/i386-linux-gnu/bits/types.h \
- /usr/include/i386-linux-gnu/bits/typesizes.h \
- /usr/include/i386-linux-gnu/bits/types/__FILE.h \
- /usr/include/i386-linux-gnu/bits/types/FILE.h \
- /usr/include/i386-linux-gnu/bits/libio.h \
- /usr/include/i386-linux-gnu/bits/_G_config.h \
- /usr/include/i386-linux-gnu/bits/types/__mbstate_t.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/i386-linux-gnu/bits/types/locale_t.h \
- /usr/include/i386-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h ../threads/scheduler.h ../threads/list.h \
+ /usr/include/xlocale.h ../threads/scheduler.h ../threads/list.h \
  ../threads/thread.h ../userprog/addrspace.h ../filesys/filesys.h \
  ../filesys/openfile.h ../threads/utility.h ../machine/translate.h \
  ../machine/machine.h ../machine/disk.h ../machine/translate.h \

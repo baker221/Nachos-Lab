@@ -214,13 +214,19 @@ ExceptionType Machine::Translate(int virtAddr, int *physAddr, int size,
     }
     entry = &pageTable[vpn];
   } else {
+    tlbTotalCount++;
     for (entry = NULL, i = 0; i < TLBSize; i++) {
       if (tlb[i].valid && (tlb[i].virtualPage == vpn)) {
         entry = &tlb[i]; // FOUND!
+        for (int j = 0; j < TLBSize; j++) {
+          tlbUseCounter[j]++;
+        }
+        tlbUseCounter[i] = 0;
         break;
       }
     }
     if (entry == NULL) { // not found
+      tlbMissCount++;
       DEBUG('a', "*** no valid TLB entry found for this virtual page!\n");
       return PageFaultException; // really, this is a TLB fault,
                                  // the page may be in memory,

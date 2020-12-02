@@ -22,9 +22,9 @@
 // of liability and disclaimer of warranty provisions.
 
 #include "copyright.h"
+#include "machine.h"
 #include "syscall.h"
 #include "system.h"
-#include "machine.h"
 
 // FIFO Replace
 void FIFOReplace(TranslationEntry page) {
@@ -45,14 +45,61 @@ void FIFOReplace(TranslationEntry page) {
   machine->tlb[replaceIdx] = page;
 }
 
+// LRU Replace
+void LRUReplace(TranslationEntry page) {
+  printf("Using LRU Replace Algorithm!\n");
+  int replaceIdx = -1;
+  for (int i = 0; i < TLBSize; i++) {
+    machine->tlbUseCounter[i]++;
+  }
+  for (int i = 0; i < TLBSize; i++) {
+    if (machine->tlb[i].valid == FALSE) {
+      replaceIdx = i;
+      break;
+    }
+  }
+  if (replaceIdx == -1) { // LRU
+    int maxm = 0;
+    for (int i = 0; i < TLBSize; i++) {
+      if (machine->tlbUseCounter[i] > maxm) {
+        maxm = machine->tlbUseCounter[i];
+        replaceIdx = i;
+      }
+    }
+  }
+  machine->tlb[replaceIdx] = page;
+  machine->tlbUseCounter[replaceIdx] = 0;
+}
+
+// Random Replace
+void RandomReplace(TranslationEntry page) {
+  printf("Using Random Replace Algorithm!\n");
+  int replaceIdx = -1;
+  for (int i = 0; i < TLBSize; i++) {
+    machine->tlbUseCounter[i]++;
+  }
+  for (int i = 0; i < TLBSize; i++) {
+    if (machine->tlb[i].valid == FALSE) {
+      replaceIdx = i;
+      break;
+    }
+  }
+  if (replaceIdx == -1) { // Random
+    replaceIdx = Random() % TLBSize;
+  }
+  machine->tlb[replaceIdx] = page;
+}
+
 void TLBMissHandler(int BadVAddr) {
-  unsigned int vpn = (unsigned) BadVAddr / PageSize;
+  unsigned int vpn = (unsigned)BadVAddr / PageSize;
   TranslationEntry page = machine->pageTable[vpn];
   if (!page.valid) {
     printf("True page table page fault happens!\n");
     ASSERT(FALSE);
   }
-  FIFOReplace(page);
+  // FIFOReplace(page);
+  // LRUReplace(page);
+  RandomReplace(page);
 }
 
 //----------------------------------------------------------------------
@@ -91,8 +138,12 @@ void ExceptionHandler(ExceptionType which) {
       TLBMissHandler(BadVAddr);
     }
     return;
-  } else if ((which == SyscallException) && (type == SC_Halt)) {
+  } else if ((which == SyscallException) &&
+             (type == SC_Halt || type == SC_Exit)) {
     DEBUG('a', "Shutdown, initiated by user program.\n");
+    printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
+           machine->tlbTotalCount, machine->tlbMissCount,
+           100.0 * machine->tlbMissCount / machine->tlbTotalCount);
     interrupt->Halt();
   } else {
     printf("Unexpected user mode exception %d %d\n", which, type);
