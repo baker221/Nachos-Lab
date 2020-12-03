@@ -85,19 +85,23 @@ AddrSpace::AddrSpace(OpenFile *executable) {
   // first, set up the translation
   pageTable = new TranslationEntry[numPages];
   for (i = 0; i < numPages; i++) {
-    pageTable[i].virtualPage = i; // for now, virtual page # = phys page #
-    pageTable[i].physicalPage = i;
+    int ppn = machine->allocMem();
+    ASSERT(ppn != -1);
+    printf("Allocate virtual page #%d at physical page #%d\n", i, ppn);
+    pageTable[i].virtualPage = i;
+    pageTable[i].physicalPage = ppn;
     pageTable[i].valid = TRUE;
     pageTable[i].use = FALSE;
     pageTable[i].dirty = FALSE;
     pageTable[i].readOnly = FALSE; // if the code segment was entirely on
                                    // a separate page, we could set its
                                    // pages to be read-only
+    bzero(machine->mainMemory[ppn * PageSize], PageSize);
   }
 
   // zero out the entire address space, to zero the unitialized data segment
   // and the stack segment
-  bzero(machine->mainMemory, size);
+  // bzero(machine->mainMemory, size);
 
   // then, copy in the code and data segments into memory
   if (noffH.code.size > 0) {
@@ -119,7 +123,10 @@ AddrSpace::AddrSpace(OpenFile *executable) {
 // 	Dealloate an address space.  Nothing for now!
 //----------------------------------------------------------------------
 
-AddrSpace::~AddrSpace() { delete pageTable; }
+AddrSpace::~AddrSpace() {
+  printf("Entering the Deconstructor of AddrSpace\n");
+  delete pageTable;
+}
 
 //----------------------------------------------------------------------
 // AddrSpace::InitRegisters

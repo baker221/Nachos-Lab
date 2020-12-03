@@ -208,9 +208,12 @@ void Machine::WriteRegister(int num, int value) {
   registers[num] = value;
 }
 
-int Machine::allocMem() {
-  return bitmap->Find();
-}
+int Machine::allocMem() { return bitmap->Find(); }
 void Machine::freeMem() {
-  return;
+  for (int i = 0; i < pageTableSize; i++) {
+    if (pageTable[i].valid) {
+      printf("Clear physical page #%d\n", pageTable[i].physicalPage);
+      machine->bitmap->Clear(pageTable[i].physicalPage);
+    }
+  }
 }

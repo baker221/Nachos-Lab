@@ -98,8 +98,8 @@ void TLBMissHandler(int BadVAddr) {
     ASSERT(FALSE);
   }
   // FIFOReplace(page);
-  // LRUReplace(page);
-  RandomReplace(page);
+  LRUReplace(page);
+  // RandomReplace(page);
 }
 
 //----------------------------------------------------------------------
@@ -144,6 +144,7 @@ void ExceptionHandler(ExceptionType which) {
     printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
            machine->tlbTotalCount, machine->tlbMissCount,
            100.0 * machine->tlbMissCount / machine->tlbTotalCount);
+    machine->freeMem();
     interrupt->Halt();
   } else {
     printf("Unexpected user mode exception %d %d\n", which, type);
