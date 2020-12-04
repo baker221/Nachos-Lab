@@ -96,7 +96,7 @@ AddrSpace::AddrSpace(OpenFile *executable) {
     pageTable[i].readOnly = FALSE; // if the code segment was entirely on
                                    // a separate page, we could set its
                                    // pages to be read-only
-    bzero(machine->mainMemory[ppn * PageSize], PageSize);
+    bzero(&machine->mainMemory[ppn * PageSize], PageSize);
   }
 
   // zero out the entire address space, to zero the unitialized data segment
@@ -107,14 +107,30 @@ AddrSpace::AddrSpace(OpenFile *executable) {
   if (noffH.code.size > 0) {
     DEBUG('a', "Initializing code segment, at 0x%x, size %d\n",
           noffH.code.virtualAddr, noffH.code.size);
-    executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
-                       noffH.code.size, noffH.code.inFileAddr);
+    for (int i = 0; i < noffH.code.size; i++) {
+      int vpn = (noffH.code.virtualAddr + i) / PageSize;
+      int offset = (noffH.code.virtualAddr + i) % PageSize;
+      int ppn = pageTable[vpn].physicalPage;
+      int physicalAddr = ppn * PageSize + offset;
+      executable->ReadAt(&(machine->mainMemory[physicalAddr]), 1,
+                         noffH.code.inFileAddr + i);
+    }
+    // executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
+    //                    noffH.code.size, noffH.code.inFileAddr);
   }
   if (noffH.initData.size > 0) {
     DEBUG('a', "Initializing data segment, at 0x%x, size %d\n",
           noffH.initData.virtualAddr, noffH.initData.size);
-    executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
-                       noffH.initData.size, noffH.initData.inFileAddr);
+    for (int i = 0; i < noffH.initData.size; i++) {
+      int vpn = (noffH.code.virtualAddr + i) / PageSize;
+      int offset = (noffH.code.virtualAddr + i) % PageSize;
+      int ppn = pageTable[vpn].physicalPage;
+      int physicalAddr = ppn * PageSize + offset;
+      executable->ReadAt(&(machine->mainMemory[physicalAddr]), 1,
+                         noffH.initData.inFileAddr + i);
+    }
+    // executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
+    //                    noffH.initData.size, noffH.initData.inFileAddr);
   }
 }
 
@@ -166,7 +182,11 @@ void AddrSpace::InitRegisters() {
 //	For now, nothing!
 //----------------------------------------------------------------------
 
-void AddrSpace::SaveState() {}
+void AddrSpace::SaveState() {
+  for (int i = 0; i < TLBSize; i++) {
+    machine->tlb[i].valid = FALSE;
+  }
+}
 
 //----------------------------------------------------------------------
 // AddrSpace::RestoreState

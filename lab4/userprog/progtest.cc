@@ -14,6 +14,14 @@
 #include "synch.h"
 #include "system.h"
 
+void RunUserProcess(int arg) {
+  Machine *m = (Machine *)arg;
+  currentThread->space->InitRegisters(); // set the initial register values
+  currentThread->space->RestoreState();  // load page table register
+  printf("fork thread ready to run\n");
+  m->Run();
+}
+
 //----------------------------------------------------------------------
 // StartProcess
 // 	Run a user program.  Open the executable, load it into
@@ -22,7 +30,7 @@
 
 void StartProcess(char *filename) {
   OpenFile *executable = fileSystem->Open(filename);
-  AddrSpace *space;
+  AddrSpace *space, *space2;
 
   if (executable == NULL) {
     printf("Unable to open file %s\n", filename);
@@ -31,11 +39,17 @@ void StartProcess(char *filename) {
   space = new AddrSpace(executable);
   currentThread->space = space;
 
+  Thread *fork = new Thread("forked");
+  fork->Fork(RunUserProcess, (int)machine);
+  space2 = new AddrSpace(executable);
+  fork->space = space2;
+
   delete executable; // close file
 
   space->InitRegisters(); // set the initial register values
   space->RestoreState();  // load page table register
 
+  printf("main thread ready to run\n");
   machine->Run(); // jump to the user progam
   ASSERT(FALSE);  // machine->Run never returns;
                   // the address space exits

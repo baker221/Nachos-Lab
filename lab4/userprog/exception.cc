@@ -47,7 +47,7 @@ void FIFOReplace(TranslationEntry page) {
 
 // LRU Replace
 void LRUReplace(TranslationEntry page) {
-  printf("Using LRU Replace Algorithm!\n");
+  // printf("Using LRU Replace Algorithm!\n");
   int replaceIdx = -1;
   for (int i = 0; i < TLBSize; i++) {
     machine->tlbUseCounter[i]++;
@@ -90,9 +90,7 @@ void RandomReplace(TranslationEntry page) {
   machine->tlb[replaceIdx] = page;
 }
 
-void TLBMissHandler(int BadVAddr) {
-  unsigned int vpn = (unsigned)BadVAddr / PageSize;
-  TranslationEntry page = machine->pageTable[vpn];
+void TLBMissHandler(TranslationEntry page) {
   if (!page.valid) {
     printf("True page table page fault happens!\n");
     ASSERT(FALSE);
@@ -129,13 +127,15 @@ void ExceptionHandler(ExceptionType which) {
   int type = machine->ReadRegister(2);
 
   if (which == PageFaultException) {
+    int BadVAddr = machine->ReadRegister(BadVAddrReg);
+    unsigned int vpn = (unsigned)BadVAddr / PageSize;
+    TranslationEntry page = machine->pageTable[vpn];
     if (machine->tlb == NULL) {
       printf("Page table page fault.\n");
-      ASSERT(FALSE);
+      PageFaultHandler(page);
     } else {
-      printf("TLB miss!\n");
-      int BadVAddr = machine->ReadRegister(BadVAddrReg);
-      TLBMissHandler(BadVAddr);
+      // printf("TLB miss!\n");
+      TLBMissHandler(page);
     }
     return;
   } else if ((which == SyscallException) &&
