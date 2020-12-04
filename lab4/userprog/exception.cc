@@ -26,6 +26,9 @@
 #include "syscall.h"
 #include "system.h"
 
+// The PageFault Handler
+void PageFaultHandler(TranslationEntry page) { return; }
+
 // FIFO Replace
 void FIFOReplace(TranslationEntry page) {
   printf("Using FIFO Replace Algorithm!\n");
@@ -93,7 +96,7 @@ void RandomReplace(TranslationEntry page) {
 void TLBMissHandler(TranslationEntry page) {
   if (!page.valid) {
     printf("True page table page fault happens!\n");
-    ASSERT(FALSE);
+    PageFaultHandler(page);
   }
   // FIFOReplace(page);
   LRUReplace(page);
@@ -138,14 +141,22 @@ void ExceptionHandler(ExceptionType which) {
       TLBMissHandler(page);
     }
     return;
-  } else if ((which == SyscallException) &&
-             (type == SC_Halt || type == SC_Exit)) {
+  } else if ((which == SyscallException) && type == SC_Halt) {
     DEBUG('a', "Shutdown, initiated by user program.\n");
     printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
            machine->tlbTotalCount, machine->tlbMissCount,
            100.0 * machine->tlbMissCount / machine->tlbTotalCount);
     machine->freeMem();
     interrupt->Halt();
+  } else if ((which == SyscallException) && type == SC_Exit) {
+    DEBUG('a', "Exit, initiated by user program.\n");
+    printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
+           machine->tlbTotalCount, machine->tlbMissCount,
+           100.0 * machine->tlbMissCount / machine->tlbTotalCount);
+    int status = machine->ReadRegister(4);
+    printf("User program exit with status %d\n", status);
+    machine->freeMem();
+    currentThread->Finish();
   } else {
     printf("Unexpected user mode exception %d %d\n", which, type);
     ASSERT(FALSE);
