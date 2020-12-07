@@ -190,6 +190,9 @@ public:
   TranslationEntry *pageTable;
   unsigned int pageTableSize;
 
+  reTranslationEntry *reversePageTable;
+  void replacePage(int BadVAddr);
+
 private:
   bool singleStep;  // drop back into the debugger after each
                     // simulated instruction

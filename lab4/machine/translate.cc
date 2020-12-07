@@ -182,7 +182,7 @@ ExceptionType Machine::Translate(int virtAddr, int *physAddr, int size,
                                  bool writing) {
   int i;
   unsigned int vpn, offset;
-  TranslationEntry *entry;
+  reTranslationEntry *entry = NULL;
   unsigned int pageFrame;
 
   DEBUG('a', "\tTranslate 0x%x, %s: ", virtAddr, writing ? "write" : "read");
@@ -195,43 +195,44 @@ ExceptionType Machine::Translate(int virtAddr, int *physAddr, int size,
 
   // we must have either a TLB or a page table, but not both!
   // ASSERT(tlb == NULL || pageTable == NULL);
-  ASSERT(tlb != NULL || pageTable != NULL);
+  // ASSERT(tlb != NULL || pageTable != NULL);
 
   // calculate the virtual page number, and offset within the page,
   // from the virtual address
   vpn = (unsigned)virtAddr / PageSize;
   offset = (unsigned)virtAddr % PageSize;
-
   if (tlb == NULL) { // => page table => vpn is index into table
-    if (vpn >= pageTableSize) {
-      DEBUG('a', "virtual page # %d too large for page table size %d!\n",
-            virtAddr, pageTableSize);
-      return AddressErrorException;
-    } else if (!pageTable[vpn].valid) {
-      DEBUG('a', "virtual page # %d too large for page table size %d!\n",
-            virtAddr, pageTableSize);
-      return PageFaultException;
-    }
-    entry = &pageTable[vpn];
-  } else {
-    tlbTotalCount++;
-    for (entry = NULL, i = 0; i < TLBSize; i++) {
-      if (tlb[i].valid && (tlb[i].virtualPage == vpn)) {
-        entry = &tlb[i]; // FOUND!
-        for (int j = 0; j < TLBSize; j++) {
-          tlbUseCounter[j]++;
-        }
-        tlbUseCounter[i] = 0;
+    for (int i = 0; i < NumPhysPages; i++) {
+      if (reversePageTable[i].valid == TRUE &&
+          reversePageTable[i].virtualPage == vpn &&
+          reversePageTable[i].tid == currentThread->getThreadID()) {
+        entry = &reversePageTable[i];
+        DEBUG('a', "Found page at ppn %d, and vpn is %d\n", i, vpn);
         break;
       }
     }
-    if (entry == NULL) { // not found
-      tlbMissCount++;
-      DEBUG('a', "*** no valid TLB entry found for this virtual page!\n");
-      return PageFaultException; // really, this is a TLB fault,
-                                 // the page may be in memory,
-                                 // but not in the TLB
+    if (entry == NULL) {
+      return PageFaultException;
     }
+  } else {
+    // tlbTotalCount++;
+    // for (entry = NULL, i = 0; i < TLBSize; i++) {
+    //   if (tlb[i].valid && (tlb[i].virtualPage == vpn)) {
+    //     entry = &tlb[i]; // FOUND!
+    //     for (int j = 0; j < TLBSize; j++) {
+    //       tlbUseCounter[j]++;
+    //     }
+    //     tlbUseCounter[i] = 0;
+    //     break;
+    //   }
+    // }
+    // if (entry == NULL) { // not found
+    //   tlbMissCount++;
+    //   DEBUG('a', "*** no valid TLB entry found for this virtual page!\n");
+    //   return PageFaultException; // really, this is a TLB fault,
+    //                              // the page may be in memory,
+    //                              // but not in the TLB
+    // }
   }
 
   if (entry->readOnly && writing) { // trying to write to a read-only page

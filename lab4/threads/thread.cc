@@ -25,6 +25,19 @@
              // execution stack, for detecting
              // stack overflows
 
+// begin ljl
+int allocateThreadID(Thread* cur) {
+  for (int i = 1; i < MAXTHREAD; i++) {
+    if (Threads[i] == NULL) {
+      Threads[i] = cur;
+      printf("i=%d, cur=%p, threads[i]=%p\n", i, cur, Threads[i]);
+      return i;
+    }
+  }
+  return -1;
+}
+// end ljl
+
 //----------------------------------------------------------------------
 // Thread::Thread
 // 	Initialize a thread control block, so that we can then call
@@ -34,6 +47,12 @@
 //----------------------------------------------------------------------
 
 Thread::Thread(char *threadName) {
+  ThreadID = allocateThreadID(this);
+  if (ThreadID == -1) {
+    printf("Max thread threshold reached!!!!\n");
+  }
+  ASSERT(ThreadID != -1);
+  ASSERT(Threads[ThreadID] == this);
   name = threadName;
   stackTop = NULL;
   stack = NULL;
@@ -57,8 +76,8 @@ Thread::Thread(char *threadName) {
 
 Thread::~Thread() {
   DEBUG('t', "Deleting thread \"%s\"\n", name);
-
   ASSERT(this != currentThread);
+  Threads[ThreadID] = NULL;
   if (stack != NULL)
     DeallocBoundedArray((char *)stack, StackSize * sizeof(int));
 }

@@ -28,6 +28,8 @@ extern Scheduler *scheduler;        // the ready list
 extern Interrupt *interrupt;        // interrupt status
 extern Statistics *stats;           // performance metrics
 extern Timer *timer;                // the hardware alarm clock
+# define MAXTHREAD 128
+extern Thread* Threads[MAXTHREAD];
 
 #ifdef USER_PROGRAM
 #include "machine.h"

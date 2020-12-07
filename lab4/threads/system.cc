@@ -18,6 +18,7 @@ Interrupt *interrupt;        // interrupt status
 Statistics *stats;           // performance metrics
 Timer *timer;                // the hardware timer device,
                              // for invoking context switches
+Thread *Threads[MAXTHREAD];
 
 #ifdef FILESYS_NEEDED
 FileSystem *fileSystem;
@@ -71,6 +72,10 @@ static void TimerInterruptHandler(int dummy) {
 //		ex: "nachos -d +" -> argv = {"nachos", "-d", "+"}
 //----------------------------------------------------------------------
 void Initialize(int argc, char **argv) {
+  printf("Initialize Threads table\n");
+  for (int i = 0; i < MAXTHREAD; i++) {
+    Threads[i] = NULL;
+  }
   int argCount;
   char *debugArgs = "";
   bool randomYield = FALSE;

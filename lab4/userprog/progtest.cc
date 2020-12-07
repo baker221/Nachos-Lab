@@ -30,19 +30,18 @@ void RunUserProcess(int arg) {
 
 void StartProcess(char *filename) {
   OpenFile *executable = fileSystem->Open(filename);
-  AddrSpace *space, *space2;
+  AddrSpace *space;
 
   if (executable == NULL) {
     printf("Unable to open file %s\n", filename);
     return;
   }
   space = new AddrSpace(executable);
+  // char k = space->disk[0];
+  // printf("%c\n", k);
   currentThread->space = space;
-
-  Thread *fork = new Thread("forked");
-  fork->Fork(RunUserProcess, (int)machine);
-  space2 = new AddrSpace(executable);
-  fork->space = space2;
+  // k = currentThread->space->disk[0];
+  // printf("%c\n", k);
 
   delete executable; // close file
 

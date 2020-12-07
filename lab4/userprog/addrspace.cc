@@ -75,29 +75,21 @@ AddrSpace::AddrSpace(OpenFile *executable) {
   numPages = divRoundUp(size, PageSize);
   size = numPages * PageSize;
 
-  ASSERT(numPages <= NumPhysPages); // check we're not trying
-                                    // to run anything too big --
-                                    // at least until we have
-                                    // virtual memory
+  disk = new char[size];
+
+  // ASSERT(numPages <= NumPhysPages); // check we're not trying
+  // to run anything too big --
+  // at least until we have
+  // virtual memory
 
   DEBUG('a', "Initializing address space, num pages %d, size %d\n", numPages,
         size);
   // first, set up the translation
-  pageTable = new TranslationEntry[numPages];
-  for (i = 0; i < numPages; i++) {
-    int ppn = machine->allocMem();
-    ASSERT(ppn != -1);
-    printf("Allocate virtual page #%d at physical page #%d\n", i, ppn);
-    pageTable[i].virtualPage = i;
-    pageTable[i].physicalPage = ppn;
-    pageTable[i].valid = TRUE;
-    pageTable[i].use = FALSE;
-    pageTable[i].dirty = FALSE;
-    pageTable[i].readOnly = FALSE; // if the code segment was entirely on
-                                   // a separate page, we could set its
-                                   // pages to be read-only
-    bzero(&machine->mainMemory[ppn * PageSize], PageSize);
-  }
+  // pageTable = new TranslationEntry[numPages];
+  // for (i = 0; i < numPages; i++) {
+  //   pageTable[i].virtualPage = i;
+  //   pageTable[i].valid = FALSE;
+  // }
 
   // zero out the entire address space, to zero the unitialized data segment
   // and the stack segment
@@ -110,13 +102,9 @@ AddrSpace::AddrSpace(OpenFile *executable) {
     for (int i = 0; i < noffH.code.size; i++) {
       int vpn = (noffH.code.virtualAddr + i) / PageSize;
       int offset = (noffH.code.virtualAddr + i) % PageSize;
-      int ppn = pageTable[vpn].physicalPage;
-      int physicalAddr = ppn * PageSize + offset;
-      executable->ReadAt(&(machine->mainMemory[physicalAddr]), 1,
-                         noffH.code.inFileAddr + i);
+      int Addr = vpn * PageSize + offset;
+      executable->ReadAt(&(disk[Addr]), 1, noffH.code.inFileAddr + i);
     }
-    // executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
-    //                    noffH.code.size, noffH.code.inFileAddr);
   }
   if (noffH.initData.size > 0) {
     DEBUG('a', "Initializing data segment, at 0x%x, size %d\n",
@@ -124,13 +112,9 @@ AddrSpace::AddrSpace(OpenFile *executable) {
     for (int i = 0; i < noffH.initData.size; i++) {
       int vpn = (noffH.code.virtualAddr + i) / PageSize;
       int offset = (noffH.code.virtualAddr + i) % PageSize;
-      int ppn = pageTable[vpn].physicalPage;
-      int physicalAddr = ppn * PageSize + offset;
-      executable->ReadAt(&(machine->mainMemory[physicalAddr]), 1,
-                         noffH.initData.inFileAddr + i);
+      int Addr = vpn * PageSize + offset;
+      executable->ReadAt(&(disk[Addr]), 1, noffH.initData.inFileAddr + i);
     }
-    // executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
-    //                    noffH.initData.size, noffH.initData.inFileAddr);
   }
 }
 
@@ -142,6 +126,7 @@ AddrSpace::AddrSpace(OpenFile *executable) {
 AddrSpace::~AddrSpace() {
   printf("Entering the Deconstructor of AddrSpace\n");
   delete pageTable;
+  delete disk;
 }
 
 //----------------------------------------------------------------------
@@ -183,9 +168,9 @@ void AddrSpace::InitRegisters() {
 //----------------------------------------------------------------------
 
 void AddrSpace::SaveState() {
-  for (int i = 0; i < TLBSize; i++) {
-    machine->tlb[i].valid = FALSE;
-  }
+  // for (int i = 0; i < TLBSize; i++) {
+  //   machine->tlb[i].valid = FALSE;
+  // }
 }
 
 //----------------------------------------------------------------------

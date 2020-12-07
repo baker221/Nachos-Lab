@@ -99,6 +99,7 @@ public:
   void setStatus(ThreadStatus st) { status = st; }
   char *getName() { return (name); }
   void Print() { printf("%s, ", name); }
+  int getThreadID() { return ThreadID; }
 
 private:
   // some of the private data for this class is listed above
@@ -108,6 +109,7 @@ private:
                        // (If NULL, don't deallocate stack)
   ThreadStatus status; // ready, running or blocked
   char *name;
+  int ThreadID;
 
   void StackAllocate(VoidFunctionPtr func, void *arg);
   // Allocate a stack for thread.

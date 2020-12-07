@@ -21,13 +21,14 @@
 // All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
+#include "addrspace.h"
 #include "copyright.h"
 #include "machine.h"
 #include "syscall.h"
 #include "system.h"
 
 // The PageFault Handler
-void PageFaultHandler(TranslationEntry page) { return; }
+void PageFaultHandler(int BadVAddr) { machine->replacePage(BadVAddr); }
 
 // FIFO Replace
 void FIFOReplace(TranslationEntry page) {
@@ -94,10 +95,6 @@ void RandomReplace(TranslationEntry page) {
 }
 
 void TLBMissHandler(TranslationEntry page) {
-  if (!page.valid) {
-    printf("True page table page fault happens!\n");
-    PageFaultHandler(page);
-  }
   // FIFOReplace(page);
   LRUReplace(page);
   // RandomReplace(page);
@@ -130,32 +127,26 @@ void ExceptionHandler(ExceptionType which) {
   int type = machine->ReadRegister(2);
 
   if (which == PageFaultException) {
+    DEBUG('a', "PageFaultException.\n");
     int BadVAddr = machine->ReadRegister(BadVAddrReg);
     unsigned int vpn = (unsigned)BadVAddr / PageSize;
-    TranslationEntry page = machine->pageTable[vpn];
-    if (machine->tlb == NULL) {
-      printf("Page table page fault.\n");
-      PageFaultHandler(page);
-    } else {
-      // printf("TLB miss!\n");
-      TLBMissHandler(page);
-    }
+    PageFaultHandler(BadVAddr);
     return;
   } else if ((which == SyscallException) && type == SC_Halt) {
     DEBUG('a', "Shutdown, initiated by user program.\n");
-    printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
-           machine->tlbTotalCount, machine->tlbMissCount,
-           100.0 * machine->tlbMissCount / machine->tlbTotalCount);
-    machine->freeMem();
+    // printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
+    //        machine->tlbTotalCount, machine->tlbMissCount,
+    //        100.0 * machine->tlbMissCount / machine->tlbTotalCount);
+    // machine->freeMem();
     interrupt->Halt();
   } else if ((which == SyscallException) && type == SC_Exit) {
     DEBUG('a', "Exit, initiated by user program.\n");
-    printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
-           machine->tlbTotalCount, machine->tlbMissCount,
-           100.0 * machine->tlbMissCount / machine->tlbTotalCount);
+    // printf("tlbTotalCount is %d, tlbMissCount is %d, tlbMissRate is %f\%\n",
+    //        machine->tlbTotalCount, machine->tlbMissCount,
+    //        100.0 * machine->tlbMissCount / machine->tlbTotalCount);
     int status = machine->ReadRegister(4);
     printf("User program exit with status %d\n", status);
-    machine->freeMem();
+    // machine->freeMem();
     currentThread->Finish();
   } else {
     printf("Unexpected user mode exception %d %d\n", which, type);

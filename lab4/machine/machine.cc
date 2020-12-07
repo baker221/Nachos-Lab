@@ -56,13 +56,24 @@ static void CheckEndian() {
 
 Machine::Machine(bool debug) {
   int i;
-
   for (i = 0; i < NumTotalRegs; i++)
     registers[i] = 0;
   mainMemory = new char[MemorySize];
   for (i = 0; i < MemorySize; i++)
     mainMemory[i] = 0;
   bitmap = new BitMap(NumPhysPages);
+  reversePageTable = new reTranslationEntry[NumPhysPages];
+  DEBUG('a', "Initialize reverse PageTable\n");
+  for (i = 0; i < NumPhysPages; i++) {
+    int ppn = this->allocMem();
+    ASSERT(ppn != -1);
+    reversePageTable[i].physicalPage = ppn;
+    reversePageTable[i].virtualPage = -1;
+    reversePageTable[i].valid = FALSE;
+    reversePageTable[i].readOnly = FALSE;
+    reversePageTable[i].use = FALSE;
+    reversePageTable[i].tid = -1;
+  }
 #ifdef USE_TLB
   tlb = new TranslationEntry[TLBSize];
   tlbUseCounter = new int[TLBSize];
@@ -213,7 +224,50 @@ void Machine::freeMem() {
   for (int i = 0; i < pageTableSize; i++) {
     if (pageTable[i].valid) {
       printf("Clear physical page #%d\n", pageTable[i].physicalPage);
-      machine->bitmap->Clear(pageTable[i].physicalPage);
+      bitmap->Clear(pageTable[i].physicalPage);
     }
   }
+}
+
+void Machine::replacePage(int BadVAddr) {
+  DEBUG('a', "Entering replace page function.\n");
+  unsigned int vpn = (unsigned)BadVAddr / PageSize;
+  int pos = -1;
+  for (int i = 0; i < NumPhysPages; i++) {
+    if (reversePageTable[i].valid == FALSE) {
+      pos = i;
+      break;
+    }
+  }
+  if (pos == -1) {
+    pos = Random() % NumPhysPages;
+  }
+
+  // dirty, write back to disk
+  if (reversePageTable[pos].valid == TRUE &&
+      reversePageTable[pos].dirty == TRUE) {
+    int tvpn = reversePageTable[pos].virtualPage;
+    printf("Dirty bits at vpn %d\n", tvpn);
+    int ppn = reversePageTable[pos].physicalPage;
+    int tid = reversePageTable[pos].tid;
+    for (int i = 0; i < PageSize; i++) {
+      Threads[tid]->space->disk[tvpn * PageSize + i] =
+          mainMemory[ppn * PageSize + i];
+    }
+  }
+
+  // read from disk
+  int ppn = reversePageTable[pos].physicalPage;
+  ASSERT(currentThread->space != NULL);
+  ASSERT(currentThread == Threads[currentThread->getThreadID()]);
+  printf("In thread %d, get physical page %d from virtual disk page %d\n",
+         currentThread->getThreadID(), ppn, vpn);
+  for (int j = 0; j < PageSize; j++) {
+    mainMemory[ppn * PageSize + j] =
+        currentThread->space->disk[vpn * PageSize + j];
+  }
+  reversePageTable[pos].virtualPage = vpn;
+  reversePageTable[pos].valid = TRUE;
+  reversePageTable[pos].dirty = FALSE;
+  reversePageTable[pos].tid = currentThread->getThreadID();
 }
