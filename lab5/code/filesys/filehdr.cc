@@ -39,6 +39,9 @@
 //----------------------------------------------------------------------
 
 bool FileHeader::Allocate(BitMap *freeMap, int fileSize) {
+  createTime = time(NULL);
+  lastAccessTime = createTime;
+  lastModifyTime = createTime;
   numBytes = fileSize;
   numSectors = divRoundUp(fileSize, SectorSize);
   if (freeMap->NumClear() < numSectors)
@@ -116,9 +119,12 @@ void FileHeader::Print() {
   int i, j, k;
   char *data = new char[SectorSize];
 
-  printf("FileHeader contents.  File size: %d.  File blocks:\n", numBytes);
+  printf("FileHeader contents.  File size: %d.  File blocks: ", numBytes);
   for (i = 0; i < numSectors; i++)
     printf("%d ", dataSectors[i]);
+  printf("\nCreate Time: %s Last Access Time: %s Last Modify Time:%s",
+         asctime(localtime(&createTime)), asctime(localtime(&lastAccessTime)),
+         asctime(localtime(&lastModifyTime)));
   printf("\nFile contents:\n");
   for (i = k = 0; i < numSectors; i++) {
     synchDisk->ReadSector(dataSectors[i], data);

@@ -94,6 +94,7 @@ public:
 
 private:
   FileHeader *hdr;  // Header for this file
+  int hdrSector;       // the position of header
   int seekPosition; // Current position within the file
 };
 

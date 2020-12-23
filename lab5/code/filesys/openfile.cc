@@ -29,6 +29,7 @@
 
 OpenFile::OpenFile(int sector) {
   hdr = new FileHeader;
+  hdrSector = sector;
   hdr->FetchFrom(sector);
   seekPosition = 0;
 }
@@ -66,12 +67,17 @@ void OpenFile::Seek(int position) { seekPosition = position; }
 int OpenFile::Read(char *into, int numBytes) {
   int result = ReadAt(into, numBytes, seekPosition);
   seekPosition += result;
+  hdr->lastAccessTime = time(NULL);
+  hdr->WriteBack(hdrSector);
   return result;
 }
 
 int OpenFile::Write(char *into, int numBytes) {
   int result = WriteAt(into, numBytes, seekPosition);
   seekPosition += result;
+  hdr->lastAccessTime = time(NULL);
+  hdr->lastModifyTime = hdr->lastAccessTime;
+  hdr->WriteBack(hdrSector);
   return result;
 }
 

@@ -16,8 +16,9 @@
 
 #include "bitmap.h"
 #include "disk.h"
+#include "time.h"
 
-#define NumDirect ((SectorSize - 2 * sizeof(int)) / sizeof(int))
+#define NumDirect ((SectorSize - 2 * sizeof(int) - 3 * sizeof(time_t)) / sizeof(int))
 #define MaxFileSize (NumDirect * SectorSize)
 
 // The following class defines the Nachos "file header" (in UNIX terms,
@@ -40,8 +41,8 @@ public:
   bool Allocate(BitMap *bitMap, int fileSize); // Initialize a file header,
                                                //  including allocating space
                                                //  on disk for the file data
-  void Deallocate(BitMap *bitMap); // De-allocate this file's
-                                   //  data blocks
+  void Deallocate(BitMap *bitMap);             // De-allocate this file's
+                                               //  data blocks
 
   void FetchFrom(int sectorNumber); // Initialize file header from disk
   void WriteBack(int sectorNumber); // Write modifications to file header
@@ -55,6 +56,10 @@ public:
                     // in bytes
 
   void Print(); // Print the contents of the file.
+
+  time_t createTime;     // Create time of the file
+  time_t lastAccessTime; // Last access time of the file
+  time_t lastModifyTime; // Last modify time of the file
 
 private:
   int numBytes;               // Number of bytes in the file
