@@ -86,6 +86,8 @@ public:
 
   void Print(); // List all the files and their contents
 
+  bool Reallocate(FileHeader *hdr, int newSize);
+
 private:
   OpenFile *freeMapFile; // Bit map of free disk blocks,
                          // represented as a file

@@ -45,9 +45,9 @@ bool FileHeader::Allocate(BitMap *freeMap, int fileSize) {
   numBytes = fileSize;
   numSectors = divRoundUp(fileSize, SectorSize);
   DEBUG('f', "Allocate NumBytes: %d, NumSectors: %d\n", numBytes, numSectors);
-  if (freeMap->NumClear() < numSectors + divRoundUp(numSectors, NumDirect) -
-                                1) { // 加上额外的 header 块数
-    return FALSE;                    // not enough space
+  int trueSectors = numSectors + divRoundUp(numSectors, NumDirect) - 1;
+  if (freeMap->NumClear() < trueSectors) {
+    return FALSE; // not enough space
   }
   if (numSectors > NumDirect) {
     nextHeaderSector = freeMap->Find();
@@ -121,6 +121,10 @@ int FileHeader::ByteToSector(int offset) {
   int sectorIdx = offset / SectorSize;
   if (sectorIdx >= NumDirect) {
     FileHeader *nxt = new FileHeader;
+    if (nextHeaderSector == -1) {
+      printf("The offset %d is too large.\n");
+      ASSERT(0);
+    }
     nxt->FetchFrom(nextHeaderSector);
     int sector = nxt->ByteToSector(offset - NumDirect * SectorSize);
     delete nxt;
@@ -140,7 +144,7 @@ int FileHeader::FileLength() { return numBytes; }
 void FileHeader::PrintBlocks() {
   for (int i = 0; i < min(numSectors, NumDirect); i++)
     printf("%d ", dataSectors[i]);
-  printf("\n");
+  printf("\n\t\t");
 }
 
 void FileHeader::PrintContent() {
@@ -173,12 +177,13 @@ void FileHeader::Print() {
   int nxtSector = nextHeaderSector;
   while (nxtSector != -1) {
     FileHeader *nxt = new FileHeader;
-    nxt->FetchFrom(nextHeaderSector);
+    nxt->FetchFrom(nxtSector);
     nxt->PrintBlocks();
     nxtSector = nxt->nextHeaderSector;
+    ASSERT(nxtSector != nextHeaderSector);
     delete nxt;
   }
-  printf("\tCreate Time: %s\tLast Access Time: %s\tLast Modify Time:%s",
+  printf("\n\tCreate Time: %s\tLast Access Time: %s\tLast Modify Time:%s",
          asctime(localtime(&createTime)), asctime(localtime(&lastAccessTime)),
          asctime(localtime(&lastModifyTime)));
   printf("File contents:\n");
@@ -186,9 +191,48 @@ void FileHeader::Print() {
   nxtSector = nextHeaderSector;
   while (nxtSector != -1) {
     FileHeader *nxt = new FileHeader;
-    nxt->FetchFrom(nextHeaderSector);
-    nxt->PrintContent();
+    nxt->FetchFrom(nxtSector);
+    // nxt->PrintContent();
     nxtSector = nxt->nextHeaderSector;
     delete nxt;
   }
+}
+
+bool FileHeader::Reallocate(BitMap *freeMap, int newSize) {
+  int newNumSectors = divRoundUp(newSize, SectorSize);
+  if (newNumSectors <= numSectors) {
+    numBytes = newSize;
+    return TRUE; // Do not need extend
+  }
+  int oldTrueSectors = numSectors + divRoundUp(numSectors, NumDirect) - 1;
+  int newTrueSectors = newNumSectors + divRoundUp(newNumSectors, NumDirect) - 1;
+  int extendTrueSectors = newTrueSectors - oldTrueSectors;
+  if (freeMap->NumClear() < extendTrueSectors)
+    return FALSE; // not enough space
+  numBytes = newSize;
+  if (numSectors > NumDirect) { // 调整大小前已经有多个文件头，递归找到最后一个
+    numSectors = newNumSectors;
+    FileHeader *nxt = new FileHeader;
+    nxt->FetchFrom(nextHeaderSector);
+    ASSERT(nxt->Reallocate(freeMap, newSize - NumDirect * SectorSize));
+    nxt->WriteBack(nextHeaderSector);
+    delete nxt;
+    return TRUE;
+  } else { // 未扩展大小前最后一个文件头
+    for (int i = numSectors; i < min(newNumSectors, NumDirect); i++) {
+      dataSectors[i] = freeMap->Find();
+    }
+    numSectors = newNumSectors;
+    if (newNumSectors > NumDirect) {
+      // Need to allocate extra header
+      nextHeaderSector = freeMap->Find();
+      DEBUG('f', "Allocate extra header at %d\n", nextHeaderSector);
+      FileHeader *nxt = new FileHeader;
+      ASSERT(nxt->Allocate(freeMap, newSize - NumDirect * SectorSize));
+      nxt->WriteBack(nextHeaderSector);
+      delete nxt;
+    }
+    return TRUE;
+  }
+  return FALSE;
 }

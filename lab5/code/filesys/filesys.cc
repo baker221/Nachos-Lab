@@ -328,3 +328,15 @@ void FileSystem::Print() {
   delete freeMap;
   delete directory;
 }
+
+bool FileSystem::Reallocate(FileHeader *hdr, int newSize) {
+  BitMap *freeMap = new BitMap(NumSectors);
+  freeMap->FetchFrom(freeMapFile);
+  bool result = hdr->Reallocate(freeMap, newSize);
+  if (!result) {
+    DEBUG('f', "Unable to reallocate file size %d\n", newSize);
+    return FALSE;
+  }
+  freeMap->WriteBack(freeMapFile);
+  return TRUE;
+}

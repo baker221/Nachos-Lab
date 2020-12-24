@@ -81,7 +81,7 @@ void Directory::WriteBack(OpenFile *file) {
 
 int Directory::FindIndex(char *name) {
   for (int i = 0; i < tableSize; i++)
-    if (table[i].inUse && !strncmp(table[i].name, name, FileNameMaxLen))
+    if (table[i].inUse && !strcmp(table[i].name, name))
       return i;
   return -1; // name not in directory
 }

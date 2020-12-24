@@ -166,10 +166,35 @@ void PerformanceTest() {
   stats->Print();
   FileWrite();
   FileRead();
-  // if (!fileSystem->Remove(FileName)) {
-  //   printf("Perf test: unable to remove %s\n", FileName);
-  //   return;
-  // }
+  if (!fileSystem->Remove(FileName)) {
+    printf("Perf test: unable to remove %s\n", FileName);
+    return;
+  }
   fileSystem->Print();
   stats->Print();
+}
+
+void DynamicTest() {
+  fileSystem->Create("dynamic.txt", FileSize);
+  OpenFile *openFile;
+  int i, numBytes;
+
+  openFile = fileSystem->Open("dynamic.txt");
+  if (openFile == NULL) {
+    printf("Dynamic test: unable to open %s\n", FileName);
+    return;
+  }
+  printf("Start Writing.\n");
+  for (i = 0; i < 2 * FileSize; i += ContentSize) {
+    if (i >= 5000 && (i % 100 == 0)) {
+      printf("Starting %dth writing \n", i);
+    }
+    numBytes = openFile->Write(Contents, ContentSize);
+    if (numBytes < 10) {
+      printf("Perf test: unable to write %s\n", FileName);
+      delete openFile;
+      return;
+    }
+  }
+  delete openFile; // close file
 }

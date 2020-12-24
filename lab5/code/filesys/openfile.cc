@@ -125,9 +125,10 @@ int OpenFile::ReadAt(char *into, int numBytes, int position) {
 
   // read in all the full and partial sectors that we need
   buf = new char[numSectors * SectorSize];
-  for (i = firstSector; i <= lastSector; i++)
-    synchDisk->ReadSector(hdr->ByteToSector(i * SectorSize),
-                          &buf[(i - firstSector) * SectorSize]);
+  for (i = firstSector; i <= lastSector; i++) {
+    int tSectorNum = hdr->ByteToSector(i * SectorSize);
+    synchDisk->ReadSector(tSectorNum, &buf[(i - firstSector) * SectorSize]);
+  }
 
   // copy the part we want
   bcopy(&buf[position - (firstSector * SectorSize)], into, numBytes);
@@ -141,10 +142,13 @@ int OpenFile::WriteAt(char *from, int numBytes, int position) {
   bool firstAligned, lastAligned;
   char *buf;
 
-  if ((numBytes <= 0) || (position >= fileLength))
+  if (numBytes <= 0)
     return 0; // check request
-  if ((position + numBytes) > fileLength)
-    numBytes = fileLength - position;
+  if ((position + numBytes) > fileLength) {
+    if (!fileSystem->Reallocate(hdr, position + numBytes))
+      return 0;
+    hdr->WriteBack(hdrSector);
+  }
   DEBUG('f', "Writing %d bytes at %d, from file of length %d.\n", numBytes,
         position, fileLength);
 
