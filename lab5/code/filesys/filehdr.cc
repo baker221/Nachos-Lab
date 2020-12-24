@@ -44,11 +44,24 @@ bool FileHeader::Allocate(BitMap *freeMap, int fileSize) {
   lastModifyTime = createTime;
   numBytes = fileSize;
   numSectors = divRoundUp(fileSize, SectorSize);
-  if (freeMap->NumClear() < numSectors)
-    return FALSE; // not enough space
-
-  for (int i = 0; i < numSectors; i++)
+  DEBUG('f', "Allocate NumBytes: %d, NumSectors: %d\n", numBytes, numSectors);
+  if (freeMap->NumClear() < numSectors + divRoundUp(numSectors, NumDirect) -
+                                1) { // 加上额外的 header 块数
+    return FALSE;                    // not enough space
+  }
+  if (numSectors > NumDirect) {
+    nextHeaderSector = freeMap->Find();
+    DEBUG('f', "Allocate extra header at %d\n", nextHeaderSector);
+    FileHeader *nxt = new FileHeader;
+    ASSERT(nxt->Allocate(freeMap, fileSize - NumDirect * SectorSize));
+    nxt->WriteBack(nextHeaderSector); // Writing back to sector
+    delete nxt;
+  } else {
+    nextHeaderSector = -1;
+  }
+  for (int i = 0; i < min(NumDirect, numSectors); i++) {
     dataSectors[i] = freeMap->Find();
+  }
   return TRUE;
 }
 
@@ -60,7 +73,13 @@ bool FileHeader::Allocate(BitMap *freeMap, int fileSize) {
 //----------------------------------------------------------------------
 
 void FileHeader::Deallocate(BitMap *freeMap) {
-  for (int i = 0; i < numSectors; i++) {
+  if (nextHeaderSector != -1) {
+    FileHeader *nxt = new FileHeader;
+    nxt->FetchFrom(nextHeaderSector);
+    nxt->Deallocate(freeMap);
+    delete nxt;
+  }
+  for (int i = 0; i < min(NumDirect, numSectors); i++) {
     ASSERT(freeMap->Test((int)dataSectors[i])); // ought to be marked!
     freeMap->Clear((int)dataSectors[i]);
   }
@@ -99,7 +118,16 @@ void FileHeader::WriteBack(int sector) {
 //----------------------------------------------------------------------
 
 int FileHeader::ByteToSector(int offset) {
-  return (dataSectors[offset / SectorSize]);
+  int sectorIdx = offset / SectorSize;
+  if (sectorIdx >= NumDirect) {
+    FileHeader *nxt = new FileHeader;
+    nxt->FetchFrom(nextHeaderSector);
+    int sector = nxt->ByteToSector(offset - NumDirect * SectorSize);
+    delete nxt;
+    return sector;
+  } else {
+    return (dataSectors[sectorIdx]);
+  }
 }
 
 //----------------------------------------------------------------------
@@ -109,24 +137,16 @@ int FileHeader::ByteToSector(int offset) {
 
 int FileHeader::FileLength() { return numBytes; }
 
-//----------------------------------------------------------------------
-// FileHeader::Print
-// 	Print the contents of the file header, and the contents of all
-//	the data blocks pointed to by the file header.
-//----------------------------------------------------------------------
+void FileHeader::PrintBlocks() {
+  for (int i = 0; i < min(numSectors, NumDirect); i++)
+    printf("%d ", dataSectors[i]);
+  printf("\n");
+}
 
-void FileHeader::Print() {
+void FileHeader::PrintContent() {
   int i, j, k;
   char *data = new char[SectorSize];
-
-  printf("FileHeader contents.  File size: %d.  File blocks: ", numBytes);
-  for (i = 0; i < numSectors; i++)
-    printf("%d ", dataSectors[i]);
-  printf("\nCreate Time: %s Last Access Time: %s Last Modify Time:%s",
-         asctime(localtime(&createTime)), asctime(localtime(&lastAccessTime)),
-         asctime(localtime(&lastModifyTime)));
-  printf("\nFile contents:\n");
-  for (i = k = 0; i < numSectors; i++) {
+  for (i = k = 0; i < min(NumDirect, numSectors); i++) {
     synchDisk->ReadSector(dataSectors[i], data);
     for (j = 0; (j < SectorSize) && (k < numBytes); j++, k++) {
       if ('\040' <= data[j] && data[j] <= '\176') // isprint(data[j])
@@ -137,4 +157,38 @@ void FileHeader::Print() {
     printf("\n");
   }
   delete[] data;
+}
+
+//----------------------------------------------------------------------
+// FileHeader::Print
+// 	Print the contents of the file header, and the contents of all
+//	the data blocks pointed to by the file header.
+//----------------------------------------------------------------------
+
+void FileHeader::Print() {
+  printf("FileHeader contents:\n");
+  printf("\tFile size: %d\n", numBytes);
+  printf("\tFile blocks:");
+  PrintBlocks();
+  int nxtSector = nextHeaderSector;
+  while (nxtSector != -1) {
+    FileHeader *nxt = new FileHeader;
+    nxt->FetchFrom(nextHeaderSector);
+    nxt->PrintBlocks();
+    nxtSector = nxt->nextHeaderSector;
+    delete nxt;
+  }
+  printf("\tCreate Time: %s\tLast Access Time: %s\tLast Modify Time:%s",
+         asctime(localtime(&createTime)), asctime(localtime(&lastAccessTime)),
+         asctime(localtime(&lastModifyTime)));
+  printf("File contents:\n");
+  PrintContent();
+  nxtSector = nextHeaderSector;
+  while (nxtSector != -1) {
+    FileHeader *nxt = new FileHeader;
+    nxt->FetchFrom(nextHeaderSector);
+    nxt->PrintContent();
+    nxtSector = nxt->nextHeaderSector;
+    delete nxt;
+  }
 }
