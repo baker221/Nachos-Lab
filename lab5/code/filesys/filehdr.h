@@ -61,6 +61,7 @@ public:
   void PrintBlocks();
   void PrintContent();
   bool Reallocate(BitMap *freeMap, int newSize);
+  void SetNumBytes(int bytes) { numBytes = bytes; }
 
   time_t createTime;     // Create time of the file
   time_t lastAccessTime; // Last access time of the file

@@ -249,3 +249,23 @@ void FileDelTest() {
   t3->Fork(DeleteThread, 3);
   currentThread->Yield();
 }
+
+void getDataFromPipe(int dummy) {
+  printf("In thread B: reading from pipe to console:\n");
+  char *output_data = new char[25];
+  printf("Output:");
+
+  fileSystem->ReadPipe(output_data, 24);
+  printf("%s\n", output_data);
+}
+
+void PipeTest() {
+  printf("Starting pipe test:\n");
+  printf("In thread A: reading from console to pipe:\n");
+  char *input_data = new char[25];
+  printf("Input:");
+  scanf("%s", input_data);
+  fileSystem->WritePipe(input_data, strlen(input_data));
+  Thread *t2 = new Thread("Thread B");
+  t2->Fork(getDataFromPipe, 0);
+}

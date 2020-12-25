@@ -87,7 +87,8 @@ public:
   void Print(); // List all the files and their contents
 
   bool Reallocate(FileHeader *hdr, int newSize);
-
+  int ReadPipe(char* data,int numBytes);
+  int WritePipe(char* data,int numBytes);
 private:
   OpenFile *freeMapFile; // Bit map of free disk blocks,
                          // represented as a file
