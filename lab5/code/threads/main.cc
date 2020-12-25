@@ -61,7 +61,8 @@ extern int testnum;
 
 extern void ThreadTest(void), Copy(char *unixFile, char *nachosFile);
 extern void Print(char *file), PerformanceTest(void);
-extern void StartProcess(char *file), ConsoleTest(char *in, char *out);
+extern void StartProcess(char *file), ConsoleTest(char *in, char *out),
+    SynchConsoleTest(char *in, char *out);
 extern void MailTest(int networkID);
 extern void DynamicTest(void);
 
@@ -108,7 +109,7 @@ int main(int argc, char **argv) {
     argCount = 1;
     if (!strcmp(*argv, "-z")) // print copyright
       printf(copyright);
-#ifndef FILESY
+// #ifndef FILESY
 #ifdef USER_PROGRAM
     if (!strcmp(*argv, "-x")) { // run a user program
       ASSERT(argc > 1);
@@ -122,12 +123,20 @@ int main(int argc, char **argv) {
         ConsoleTest(*(argv + 1), *(argv + 2));
         argCount = 3;
       }
+    } else if (!strcmp(*argv, "-sc")) { // test the console
+      if (argc == 1)
+        SynchConsoleTest(NULL, NULL);
+      else {
+        ASSERT(argc > 2);
+        SynchConsoleTest(*(argv + 1), *(argv + 2));
+        argCount = 3;
+      }
       interrupt->Halt(); // once we start the console, then
                          // Nachos will loop forever waiting
                          // for console input
     }
 #endif // USER_PROGRAM
-#endif
+       // #endif
 
 #ifdef FILESYS
     if (!strcmp(*argv, "-cp")) { // copy from UNIX to Nachos
@@ -175,5 +184,5 @@ int main(int argc, char **argv) {
                            // to those threads by saying that the
                            // "main" thread is finished, preventing
                            // it from returning.
-  return (0); // Not reached...
+  return (0);              // Not reached...
 }
