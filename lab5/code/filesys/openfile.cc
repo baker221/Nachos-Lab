@@ -31,6 +31,13 @@ OpenFile::OpenFile(int sector) {
   hdr = new FileHeader;
   hdrSector = sector;
   hdr->FetchFrom(sector);
+  // hdr->Print();
+  // printf("%d\n", hdr->userCnt);
+  // printf("location: %p, ", hdr->userSema); // format 之后无论运行什么这里都会段错误
+  // printf("%s\n", hdr->userSema->getName()); // TODO 这里创建时第一个 P 操作就会导致段错误，为何？
+  // hdr->userSema->P();
+  // *(hdr->userCnt)++;
+  // hdr->userSema->V();
   seekPosition = 0;
 }
 
@@ -39,7 +46,12 @@ OpenFile::OpenFile(int sector) {
 // 	Close a Nachos file, de-allocating any in-memory data structures.
 //----------------------------------------------------------------------
 
-OpenFile::~OpenFile() { delete hdr; }
+OpenFile::~OpenFile() {
+  // hdr->userSema->P();
+  // *(hdr->userCnt)--;
+  // hdr->userSema->V();
+  delete hdr;
+}
 
 //----------------------------------------------------------------------
 // OpenFile::Seek
@@ -65,7 +77,19 @@ void OpenFile::Seek(int position) { seekPosition = position; }
 //----------------------------------------------------------------------
 
 int OpenFile::Read(char *into, int numBytes) {
+  // hdr->mutex->P();
+  // *(hdr->readerCnt)++;
+  // if (*(hdr->readerCnt) == 1) {
+  //   hdr->writeSema->P();
+  // }
+  // hdr->mutex->V();
   int result = ReadAt(into, numBytes, seekPosition);
+  // hdr->mutex->P();
+  // *(hdr->readerCnt)--;
+  // if (*(hdr->readerCnt) == 0) {
+  //   hdr->writeSema->V();
+  // }
+  // hdr->mutex->V();
   seekPosition += result;
   hdr->lastAccessTime = time(NULL);
   hdr->WriteBack(hdrSector);
@@ -73,7 +97,9 @@ int OpenFile::Read(char *into, int numBytes) {
 }
 
 int OpenFile::Write(char *into, int numBytes) {
+  // hdr->writeSema->P();
   int result = WriteAt(into, numBytes, seekPosition);
+  // hdr->writeSema->V();
   seekPosition += result;
   hdr->lastAccessTime = time(NULL);
   hdr->lastModifyTime = hdr->lastAccessTime;

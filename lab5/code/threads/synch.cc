@@ -65,14 +65,15 @@ void
 Semaphore::P()
 {
     IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-    
+    // printf("%s\n", name);
+    // printf("stage 1, value = %d\n", value);
     while (value == 0) { 			// semaphore not available
 	queue->Append((void *)currentThread);	// so go to sleep
 	currentThread->Sleep();
     } 
     value--; 					// semaphore available, 
 						// consume its value
-    
+    // printf("stage 2, value = %d\n", value);
     (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
 }
 

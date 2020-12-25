@@ -78,7 +78,7 @@
 //----------------------------------------------------------------------
 
 FileSystem::FileSystem(bool format) {
-  DEBUG('f', "Initializing the file system.\n");
+  DEBUG('f', "Initializing the file system, format is %d.\n", format);
   if (format) {
     BitMap *freeMap = new BitMap(NumSectors);
     Directory *directory = new Directory(NumDirEntries);
@@ -264,6 +264,10 @@ bool FileSystem::Remove(char *name) {
   }
   fileHdr = new FileHeader;
   fileHdr->FetchFrom(sector);
+  // if (*(fileHdr->userCnt) != 0) {
+  //   printf("delete failed, other threads are using this file.\n");
+  //   return FALSE;
+  // }
 
   freeMap = new BitMap(NumSectors);
   freeMap->FetchFrom(freeMapFile);

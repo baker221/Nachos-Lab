@@ -64,7 +64,7 @@ extern void Print(char *file), PerformanceTest(void);
 extern void StartProcess(char *file), ConsoleTest(char *in, char *out),
     SynchConsoleTest(char *in, char *out);
 extern void MailTest(int networkID);
-extern void DynamicTest(void);
+extern void DynamicTest(void), FileRWTest(void);
 
 //----------------------------------------------------------------------
 // main
@@ -159,6 +159,8 @@ int main(int argc, char **argv) {
       PerformanceTest();
     } else if (!strcmp(*argv, "-dy")) { // dynamic test
       DynamicTest();
+    } else if (!strcmp(*argv, "-rw")) {
+      FileRWTest();
     }
 #endif // FILESYS
 

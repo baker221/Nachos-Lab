@@ -42,6 +42,14 @@ bool FileHeader::Allocate(BitMap *freeMap, int fileSize) {
   createTime = time(NULL);
   lastAccessTime = createTime;
   lastModifyTime = createTime;
+  // readerCnt = new int;
+  // userCnt = new int;
+  // *readerCnt = 0;
+  // *userCnt = 0;
+  // userSema = new Semaphore("user mutex", 1);
+  // mutex = new Semaphore("readerCnt mutex", 1);
+  // writeSema = new Semaphore("critical mutex", 1);
+
   numBytes = fileSize;
   numSectors = divRoundUp(fileSize, SectorSize);
   DEBUG('f', "Allocate NumBytes: %d, NumSectors: %d\n", numBytes, numSectors);

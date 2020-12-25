@@ -176,6 +176,7 @@ void PerformanceTest() {
 
 void DynamicTest() {
   fileSystem->Create("dynamic.txt", FileSize);
+  printf("what the fuck\n");
   OpenFile *openFile;
   int i, numBytes;
 
@@ -197,4 +198,38 @@ void DynamicTest() {
     }
   }
   delete openFile; // close file
+}
+
+void ReaderThread(int which) {
+  int num;
+  int numBytes;
+  char *buffer = new char[ContentSize];
+  OpenFile *openFile = fileSystem->Open("dynamic.txt");
+  for (num = 0; num < 5; num++) {
+    printf("Thread %d prepare to read.\n", which);
+    // numBytes = openFile->Read(buffer, ContentSize);
+    currentThread->Yield();
+  }
+  delete[] buffer;
+}
+
+void WriterThread(int which) {
+  int num;
+  int numBytes;
+  OpenFile *openFile = fileSystem->Open("dynamic.txt");
+  for (num = 0; num < 5; num++) {
+    printf("Thread %d prepare to write.\n", which);
+    // numBytes = openFile->Write("0987654321", ContentSize);
+    // currentThread->Yield();
+  }
+}
+
+void FileRWTest() {
+  Thread *t1 = new Thread("forked thread");
+  Thread *t2 = new Thread("forked thread");
+  Thread *t3 = new Thread("forked thread");
+  t1->Fork(ReaderThread, 1);
+  t2->Fork(WriterThread, 2);
+  t3->Fork(ReaderThread, 3);
+  currentThread->Yield();
 }
