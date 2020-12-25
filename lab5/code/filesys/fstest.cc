@@ -219,8 +219,8 @@ void WriterThread(int which) {
   OpenFile *openFile = fileSystem->Open("dynamic.txt");
   for (num = 0; num < 5; num++) {
     printf("Thread %d prepare to write.\n", which);
-    // numBytes = openFile->Write("0987654321", ContentSize);
-    // currentThread->Yield();
+    numBytes = openFile->Write("0987654321", ContentSize);
+    currentThread->Yield();
   }
 }
 
@@ -231,5 +231,20 @@ void FileRWTest() {
   t1->Fork(ReaderThread, 1);
   t2->Fork(WriterThread, 2);
   t3->Fork(ReaderThread, 3);
+  currentThread->Yield();
+}
+
+void DeleteThread(int which) {
+  OpenFile *openFile = fileSystem->Open("dynamic.txt");
+  fileSystem->Remove("dynamic.txt");
+}
+
+void FileDelTest() {
+  Thread *t1 = new Thread("forked thread");
+  Thread *t2 = new Thread("forked thread");
+  Thread *t3 = new Thread("forked thread");
+  t1->Fork(DeleteThread, 1);
+  t2->Fork(DeleteThread, 2);
+  t3->Fork(DeleteThread, 3);
   currentThread->Yield();
 }

@@ -41,6 +41,8 @@ public:
   void RequestDone(); // Called by the disk device interrupt
                       // handler, to signal that the
                       // current disk operation is complete.
+  void diskAcquire(int sectorNumber) { mutex[sectorNumber]->P(); }
+  void diskRelease(int sectorNumber) { mutex[sectorNumber]->V(); }
 
 private:
   Disk *disk;           // Raw disk device
@@ -48,6 +50,7 @@ private:
                         // with the interrupt handler
   Lock *lock;           // Only one read/write request
                         // can be sent to the disk at a time
+  Semaphore *mutex[NumSectors];
 };
 
 #endif // SYNCHDISK_H

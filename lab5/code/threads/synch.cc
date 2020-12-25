@@ -1,6 +1,6 @@
-// synch.cc 
+// synch.cc
 //	Routines for synchronizing threads.  Three kinds of
-//	synchronization routines are defined here: semaphores, locks 
+//	synchronization routines are defined here: semaphores, locks
 //   	and condition variables (the implementation of the last two
 //	are left to the reader).
 //
@@ -18,11 +18,11 @@
 // that be disabled or enabled).
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
-#include "copyright.h"
 #include "synch.h"
+#include "copyright.h"
 #include "system.h"
 
 //----------------------------------------------------------------------
@@ -33,11 +33,10 @@
 //	"initialValue" is the initial value of the semaphore.
 //----------------------------------------------------------------------
 
-Semaphore::Semaphore(char* debugName, int initialValue)
-{
-    name = debugName;
-    value = initialValue;
-    queue = new List;
+Semaphore::Semaphore(char *debugName, int initialValue) {
+  name = debugName;
+  value = initialValue;
+  queue = new List;
 }
 
 //----------------------------------------------------------------------
@@ -46,10 +45,7 @@ Semaphore::Semaphore(char* debugName, int initialValue)
 //	is still waiting on the semaphore!
 //----------------------------------------------------------------------
 
-Semaphore::~Semaphore()
-{
-    delete queue;
-}
+Semaphore::~Semaphore() { delete queue; }
 
 //----------------------------------------------------------------------
 // Semaphore::P
@@ -61,20 +57,17 @@ Semaphore::~Semaphore()
 //	when it is called.
 //----------------------------------------------------------------------
 
-void
-Semaphore::P()
-{
-    IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-    // printf("%s\n", name);
-    // printf("stage 1, value = %d\n", value);
-    while (value == 0) { 			// semaphore not available
-	queue->Append((void *)currentThread);	// so go to sleep
-	currentThread->Sleep();
-    } 
-    value--; 					// semaphore available, 
-						// consume its value
-    // printf("stage 2, value = %d\n", value);
-    (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
+void Semaphore::P() {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff); // disable interrupts
+
+  while (value == 0) {                    // semaphore not available
+    queue->Append((void *)currentThread); // so go to sleep
+    currentThread->Sleep();
+  }
+  value--; // semaphore available,
+           // consume its value
+
+  (void)interrupt->SetLevel(oldLevel); // re-enable interrupts
 }
 
 //----------------------------------------------------------------------
@@ -85,29 +78,93 @@ Semaphore::P()
 //	are disabled when it is called.
 //----------------------------------------------------------------------
 
-void
-Semaphore::V()
-{
-    Thread *thread;
-    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+void Semaphore::V() {
+  Thread *thread;
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
 
-    thread = (Thread *)queue->Remove();
-    if (thread != NULL)	   // make thread ready, consuming the V immediately
-	scheduler->ReadyToRun(thread);
-    value++;
-    (void) interrupt->SetLevel(oldLevel);
+  thread = (Thread *)queue->Remove();
+  if (thread != NULL) // make thread ready, consuming the V immediately
+    scheduler->ReadyToRun(thread);
+  value++;
+  (void)interrupt->SetLevel(oldLevel);
 }
 
-// Dummy functions -- so we can compile our later assignments 
-// Note -- without a correct implementation of Condition::Wait(), 
+// Dummy functions -- so we can compile our later assignments
+// Note -- without a correct implementation of Condition::Wait(),
 // the test case in the network assignment won't work!
-Lock::Lock(char* debugName) {}
-Lock::~Lock() {}
-void Lock::Acquire() {}
-void Lock::Release() {}
+Lock::Lock(char *debugName)
+    : name(debugName), truelock(new Semaphore("lock", 1)), owner(NULL) {}
+Lock::~Lock() { delete truelock; }
+void Lock::Acquire() {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  truelock->P();
+  owner = currentThread;
+  (void)interrupt->SetLevel(oldLevel);
+}
+void Lock::Release() {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(owner == currentThread);
+  owner = NULL;
+  truelock->V();
+  (void)interrupt->SetLevel(oldLevel);
+}
+bool Lock::isHeldByCurrentThread() { return currentThread == owner; }
 
-Condition::Condition(char* debugName) { }
-Condition::~Condition() { }
-void Condition::Wait(Lock* conditionLock) { ASSERT(FALSE); }
-void Condition::Signal(Lock* conditionLock) { }
-void Condition::Broadcast(Lock* conditionLock) { }
+Condition::Condition(char *debugName)
+    : name(debugName), wait_queue(new List()) {}
+Condition::~Condition() { delete wait_queue; }
+void Condition::Wait(Lock *conditionLock) {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(conditionLock->isHeldByCurrentThread());
+  conditionLock->Release();
+  wait_queue->Append(currentThread);
+  currentThread->Sleep();
+  conditionLock->Acquire();
+  (void)interrupt->SetLevel(oldLevel);
+}
+void Condition::Signal(Lock *conditionLock) {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(conditionLock->isHeldByCurrentThread());
+  if (!wait_queue->IsEmpty()) {
+    Thread *next = (Thread *)wait_queue->Remove();
+    scheduler->ReadyToRun(next);
+  }
+  (void)interrupt->SetLevel(oldLevel);
+}
+void Condition::Broadcast(Lock *conditionLock) {
+  IntStatus oldLevel = interrupt->SetLevel(IntOff);
+  ASSERT(conditionLock->isHeldByCurrentThread());
+  while (!wait_queue->IsEmpty()) {
+    Signal(conditionLock);
+  }
+  (void)interrupt->SetLevel(oldLevel);
+}
+
+RWLock::RWLock(char *debugName) {
+  name = debugName;
+  readNum = 0;
+  mutex = new Semaphore("mutex", 1);
+  wlock = new Semaphore("wlock", 1);
+}
+RWLock::~RWLock() {
+  delete mutex;
+  delete wlock;
+}
+void RWLock::readerIn() {
+  mutex->P();
+  if (readNum == 0) {
+    wlock->P();
+  }
+  readNum++;
+  mutex->V();
+}
+void RWLock::readerOut() {
+  mutex->P();
+  readNum--;
+  if (readNum == 0) {
+    wlock->V();
+  }
+  mutex->V();
+}
+void RWLock::writerIn() { wlock->P(); }
+void RWLock::writerOut() { wlock->V(); }

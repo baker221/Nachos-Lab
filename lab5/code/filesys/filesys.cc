@@ -50,6 +50,7 @@
 #include "disk.h"
 #include "filehdr.h"
 #include "filesys.h"
+#include "system.h"
 
 // Sectors containing the file headers for the bitmap of free sectors,
 // and the directory of files.  These file headers are placed in well-known
@@ -263,16 +264,21 @@ bool FileSystem::Remove(char *name) {
     return FALSE; // file not found
   }
   fileHdr = new FileHeader;
+  synchDisk->diskAcquire(sector);
   fileHdr->FetchFrom(sector);
-  // if (*(fileHdr->userCnt) != 0) {
-  //   printf("delete failed, other threads are using this file.\n");
-  //   return FALSE;
-  // }
+  if (fileHdr->userCnt != 0) {
+    printf("delete failed, other threads are using this file.\n");
+    delete directory;
+    delete fileHdr;
+    synchDisk->diskRelease(sector);
+    return FALSE;
+  }
 
   freeMap = new BitMap(NumSectors);
   freeMap->FetchFrom(freeMapFile);
 
   fileHdr->Deallocate(freeMap); // remove data blocks
+  synchDisk->diskRelease(sector);
   freeMap->Clear(sector);       // remove header block
   directory->Remove(name);
 

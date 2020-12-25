@@ -20,13 +20,7 @@
 #include "time.h"
 
 #define NumDirect                                                              \
-  ((SectorSize - (3 * sizeof(int)) - (2 * sizeof(int *)) -                     \
-    (3 * sizeof(Semaphore *)) - (3 * sizeof(time_t))) /                        \
-   sizeof(int))
-/*
-#define NumDirect                                                              \
-  ((SectorSize - (3 * sizeof(int)) - (3 * sizeof(time_t))) / sizeof(int))
-*/
+  ((SectorSize - (4 * sizeof(int)) - (3 * sizeof(time_t))) / sizeof(int))
 #define MaxFileSize (NumDirect * SectorSize)
 
 // The following class defines the Nachos "file header" (in UNIX terms,
@@ -71,11 +65,7 @@ public:
   time_t createTime;     // Create time of the file
   time_t lastAccessTime; // Last access time of the file
   time_t lastModifyTime; // Last modify time of the file
-  int *readerCnt;
-  int *userCnt;
-  Semaphore *writeSema;
-  Semaphore *mutex;
-  Semaphore *userSema;
+  int userCnt;
 
 private:
   int numBytes;               // Number of bytes in the file

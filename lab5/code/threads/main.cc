@@ -64,7 +64,7 @@ extern void Print(char *file), PerformanceTest(void);
 extern void StartProcess(char *file), ConsoleTest(char *in, char *out),
     SynchConsoleTest(char *in, char *out);
 extern void MailTest(int networkID);
-extern void DynamicTest(void), FileRWTest(void);
+extern void DynamicTest(void), FileRWTest(void), FileDelTest(void);
 
 //----------------------------------------------------------------------
 // main
@@ -161,6 +161,8 @@ int main(int argc, char **argv) {
       DynamicTest();
     } else if (!strcmp(*argv, "-rw")) {
       FileRWTest();
+    } else if (!strcmp(*argv, "-re")) {
+      FileDelTest();
     }
 #endif // FILESYS
 

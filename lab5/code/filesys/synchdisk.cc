@@ -42,6 +42,12 @@ SynchDisk::SynchDisk(char *name) {
   semaphore = new Semaphore("synch disk", 0);
   lock = new Lock("synch disk lock");
   disk = new Disk(name, DiskRequestDone, (int)this);
+  char *t = new char[25];
+  for (int i = 0; i < NumSectors; i++) {
+    sprintf(t, "sector mutex %d", i);
+    mutex[i] = new Semaphore(t, 1);
+  }
+  delete[] t;
 }
 
 //----------------------------------------------------------------------
