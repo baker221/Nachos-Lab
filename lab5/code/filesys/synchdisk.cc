@@ -16,6 +16,7 @@
 
 #include "synchdisk.h"
 #include "copyright.h"
+#include "system.h"
 
 //----------------------------------------------------------------------
 // DiskRequestDone
@@ -42,6 +43,7 @@ SynchDisk::SynchDisk(char *name) {
   semaphore = new Semaphore("synch disk", 0);
   lock = new Lock("synch disk lock");
   disk = new Disk(name, DiskRequestDone, (int)this);
+  Cache = new MyCache[MAX_CACHE_SIZE];
   char *t = new char[25];
   for (int i = 0; i < NumSectors; i++) {
     sprintf(t, "sector mutex %d", i);
@@ -60,6 +62,7 @@ SynchDisk::~SynchDisk() {
   delete disk;
   delete lock;
   delete semaphore;
+  delete[] Cache;
 }
 
 //----------------------------------------------------------------------
@@ -72,9 +75,48 @@ SynchDisk::~SynchDisk() {
 //----------------------------------------------------------------------
 
 void SynchDisk::ReadSector(int sectorNumber, char *data) {
+  int pos = -1;
+  for (int i = 0; i < MAX_CACHE_SIZE; i++) {
+    if (Cache[i].valid && Cache[i].sector == sectorNumber) {
+      pos = i;
+      break;
+    }
+  }
+  if (pos != -1) { // Cache Hit
+    Cache[pos].lru = stats->totalTicks;
+    bcopy(Cache[pos].data, data, SectorSize);
+    return;
+  }
+
+  int swap = -1;
+  for (int i = 0; i < MAX_CACHE_SIZE; i++) {
+    if (!Cache[i].valid) {
+      swap = i;
+      break;
+    }
+  }
+  if (swap == -1) {
+    swap = 0;
+    int LastAccessTime = Cache[0].lru; // cache is full
+    for (int i = 1; i < MAX_CACHE_SIZE; i++) {
+      if (Cache[i].lru < LastAccessTime) {
+        LastAccessTime = Cache[i].lru;
+        swap = i;
+      }
+    }
+  }
   lock->Acquire(); // only one disk I/O at a time
   disk->ReadRequest(sectorNumber, data);
-  semaphore->P(); // wait for interrupt
+  // Write On Cache
+  if (Cache[swap].valid && Cache[swap].dirty) {
+    disk->WriteRequest(sectorNumber, Cache[swap].data);
+  }
+  Cache[swap].valid = TRUE;
+  Cache[swap].sector = sectorNumber;
+  Cache[swap].lru = stats->totalTicks; // update lru
+  Cache[swap].dirty = FALSE;
+  bcopy(data, Cache[swap].data, SectorSize); // update data
+  semaphore->P();                            // wait for interrupt
   lock->Release();
 }
 
@@ -88,9 +130,49 @@ void SynchDisk::ReadSector(int sectorNumber, char *data) {
 //----------------------------------------------------------------------
 
 void SynchDisk::WriteSector(int sectorNumber, char *data) {
+  int pos = -1;
+  for (int i = 0; i < MAX_CACHE_SIZE; i++) {
+    if (Cache[i].valid && Cache[i].sector == sectorNumber) {
+      pos = i;
+      break;
+    }
+  }
+  if (pos != -1) { // Cache Hit
+    Cache[pos].lru = stats->totalTicks;
+    bcopy(data, Cache[pos].data, SectorSize);
+    Cache[pos].dirty = TRUE;
+    return;
+  }
+
+  int swap = -1;
+  for (int i = 0; i < MAX_CACHE_SIZE; i++) {
+    if (!Cache[i].valid) {
+      swap = i;
+      break;
+    }
+  }
+  if (swap == -1) {
+    swap = 0;
+    int LastAccessTime = Cache[0].lru; // cache is full
+    for (int i = 1; i < MAX_CACHE_SIZE; i++) {
+      if (Cache[i].lru < LastAccessTime) {
+        LastAccessTime = Cache[i].lru;
+        swap = i;
+      }
+    }
+  }
   lock->Acquire(); // only one disk I/O at a time
   disk->WriteRequest(sectorNumber, data);
-  semaphore->P(); // wait for interrupt
+  // Write On Cache
+  if (Cache[swap].valid && Cache[swap].dirty) {
+    disk->WriteRequest(sectorNumber, Cache[swap].data);
+  }
+  Cache[swap].valid = TRUE;
+  Cache[swap].sector = sectorNumber;
+  Cache[swap].lru = stats->totalTicks; // update lru
+  Cache[swap].dirty = FALSE;
+  bcopy(data, Cache[swap].data, SectorSize); // update data
+  semaphore->P();                            // wait for interrupt
   lock->Release();
 }
 

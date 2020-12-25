@@ -144,3 +144,20 @@ void BitMap::FetchFrom(OpenFile *file) {
 void BitMap::WriteBack(OpenFile *file) {
   file->WriteAt((char *)map, numWords * sizeof(unsigned), 0);
 }
+
+int BitMap::FindArea(int size) {
+  int s = 0, e = 0;
+  while (e < numBits) {
+    while (Test(s) && s < numBits)
+      s++, e++;
+    while (!Test(e) && e < numBits)
+      e++;
+    if (e - s + 1 >= size) {
+      for (int i = 0; i < size; ++i) {
+        Mark(s + i);
+      }
+      return s;
+    }
+  }
+  return -1;
+}

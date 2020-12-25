@@ -176,7 +176,6 @@ void PerformanceTest() {
 
 void DynamicTest() {
   fileSystem->Create("dynamic.txt", FileSize);
-  printf("what the fuck\n");
   OpenFile *openFile;
   int i, numBytes;
 
@@ -197,6 +196,8 @@ void DynamicTest() {
       return;
     }
   }
+  printf("Read disk time is %d, Write disk time is %d\n", stats->numDiskReads,
+         stats->numDiskWrites);
   delete openFile; // close file
 }
 

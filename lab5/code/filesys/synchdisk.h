@@ -11,6 +11,8 @@
 #ifndef SYNCHDISK_H
 #define SYNCHDISK_H
 
+#define MAX_CACHE_SIZE (8)
+
 #include "disk.h"
 #include "synch.h"
 
@@ -24,6 +26,22 @@
 // This class provides the abstraction that for any individual thread
 // making a request, it waits around until the operation finishes before
 // returning.
+
+class MyCache {
+public:
+  MyCache() : valid(false), dirty(false), sector(-1), lru(-1) {
+    data = new char[SectorSize];
+  }
+  ~MyCache() {
+    if (data != NULL)
+      delete[] data;
+  }
+  bool valid;
+  bool dirty;
+  int sector;
+  int lru;
+  char *data;
+};
 class SynchDisk {
 public:
   SynchDisk(char *name); // Initialize a synchronous disk,
@@ -46,6 +64,7 @@ public:
 
 private:
   Disk *disk;           // Raw disk device
+  MyCache *Cache;
   Semaphore *semaphore; // To synchronize requesting thread
                         // with the interrupt handler
   Lock *lock;           // Only one read/write request
