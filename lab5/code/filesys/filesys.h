@@ -38,6 +38,20 @@
 #include "copyright.h"
 #include "openfile.h"
 
+// Sectors containing the file headers for the bitmap of free sectors,
+// and the directory of files.  These file headers are placed in well-known
+// sectors, so that they can be located on boot-up.
+#define FreeMapSector 0
+#define DirectorySector 1
+#define PipeSector 2
+
+// Initial file sizes for the bitmap and directory; until the file system
+// supports extensible files, the directory size sets the maximum number
+// of files that can be loaded onto the disk.
+#define FreeMapFileSize (NumSectors / BitsInByte)
+#define NumDirEntries 10
+#define DirectoryFileSize (sizeof(DirectoryEntry) * NumDirEntries)
+
 #ifdef FILESYS_STUB // Temporarily implement file system calls as
                     // calls to UNIX, until the real file system
                     // implementation is available
@@ -75,20 +89,21 @@ public:
                            // the disk, so initialize the directory
                            // and the bitmap of free blocks.
 
-  bool Create(char *name, int initialSize);
+  bool Create(char *name, int initialSize, bool isDirectory = FALSE);
   // Create a file (UNIX creat)
 
   OpenFile *Open(char *name); // Open a file (UNIX open)
 
   bool Remove(char *name); // Delete a file (UNIX unlink)
 
-  void List(); // List all the files in the file system
+  void List(char *name = "/"); // List all the files in the file system
 
   void Print(); // List all the files and their contents
 
   bool Reallocate(FileHeader *hdr, int newSize);
   int ReadPipe(char* data,int numBytes);
   int WritePipe(char* data,int numBytes);
+  bool CreateDirectory(char *name);
 private:
   OpenFile *freeMapFile; // Bit map of free disk blocks,
                          // represented as a file

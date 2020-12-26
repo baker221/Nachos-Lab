@@ -52,20 +52,6 @@
 #include "filesys.h"
 #include "system.h"
 
-// Sectors containing the file headers for the bitmap of free sectors,
-// and the directory of files.  These file headers are placed in well-known
-// sectors, so that they can be located on boot-up.
-#define FreeMapSector 0
-#define DirectorySector 1
-#define PipeSector 2
-
-// Initial file sizes for the bitmap and directory; until the file system
-// supports extensible files, the directory size sets the maximum number
-// of files that can be loaded onto the disk.
-#define FreeMapFileSize (NumSectors / BitsInByte)
-#define NumDirEntries 10
-#define DirectoryFileSize (sizeof(DirectoryEntry) * NumDirEntries)
-
 //----------------------------------------------------------------------
 // FileSystem::FileSystem
 // 	Initialize the file system.  If format = TRUE, the disk has
@@ -183,7 +169,8 @@ FileSystem::FileSystem(bool format) {
 //	"initialSize" -- size of file to be created
 //----------------------------------------------------------------------
 
-bool FileSystem::Create(char *name, int initialSize) {
+bool FileSystem::Create(char *name, int initialSize,
+                        bool isDirectory /* = FALSE */) {
   Directory *directory;
   BitMap *freeMap;
   FileHeader *hdr;
@@ -203,7 +190,7 @@ bool FileSystem::Create(char *name, int initialSize) {
     sector = freeMap->Find(); // find a sector to hold the file header
     if (sector == -1)
       success = FALSE; // no free block for file header
-    else if (!directory->Add(name, sector))
+    else if (!directory->Add(name, sector, isDirectory))
       success = FALSE; // no space in directory
     else {
       hdr = new FileHeader;
@@ -222,6 +209,19 @@ bool FileSystem::Create(char *name, int initialSize) {
   }
   delete directory;
   return success;
+}
+
+bool FileSystem::CreateDirectory(char *name) {
+  while (*name == '/')
+    name++;
+  if (!Create(name, DirectoryFileSize, TRUE))
+    return FALSE;
+  OpenFile *file = Open(name);
+  Directory *directory = new Directory(NumDirEntries);
+  directory->WriteBack(file);
+  delete directory;
+  delete file;
+  return TRUE;
 }
 
 //----------------------------------------------------------------------
@@ -307,12 +307,30 @@ bool FileSystem::Remove(char *name) {
 // 	List all the files in the file system directory.
 //----------------------------------------------------------------------
 
-void FileSystem::List() {
-  Directory *directory = new Directory(NumDirEntries);
+void FileSystem::List(char *name) {
+  while (*name == '/')
+    name++;
 
-  directory->FetchFrom(directoryFile);
-  directory->List();
-  delete directory;
+  if (strlen(name) == 0) {
+    Directory *directory = new Directory(NumDirEntries);
+    directory->FetchFrom(directoryFile);
+    directory->List();
+    delete directory;
+  } else {
+    Directory *directory = new Directory(NumDirEntries);
+    directory->FetchFrom(directoryFile);
+    int sector = directory->Find(name);
+    Directory *subdir = new Directory(NumDirEntries);
+    OpenFile *file = new OpenFile(sector);
+    subdir->FetchFrom(file);
+    delete file;
+    char *prefix = new char[strlen(name) + 5];
+    strcpy(prefix, "/");
+    strcat(prefix, name);
+    subdir->List(prefix);
+    delete subdir;
+    delete directory;
+  }
 }
 
 //----------------------------------------------------------------------

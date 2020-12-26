@@ -269,3 +269,22 @@ void PipeTest() {
   Thread *t2 = new Thread("Thread B");
   t2->Fork(getDataFromPipe, 0);
 }
+
+void MultiDirTest() {
+  printf("Starting multi directory test:\n");
+  fileSystem->Create("1.txt", 100);
+  fileSystem->Create("2.txt", 100);
+  fileSystem->CreateDirectory("dir1");
+  fileSystem->Create("dir1/3.txt", 100);
+  fileSystem->CreateDirectory("dir1/dir2");
+  fileSystem->Create("dir1/dir2/4.txt", 100);
+  fileSystem->CreateDirectory("dir3");
+  fileSystem->CreateDirectory("dir3/pku");
+  fileSystem->Create("dir3/pku/xxx.cpp", 100);
+  printf("-------------------------\n");
+  fileSystem->List();
+  fileSystem->List("dir1");
+  fileSystem->List("dir1/dir2");
+  fileSystem->List("dir3");
+  fileSystem->List("dir3/pku");
+}
