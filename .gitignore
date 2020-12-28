@@ -5,3 +5,4 @@ DISK
 *.o
 swtch.s
 *~
+.DS_Store
